@@ -21,6 +21,20 @@ export const getContentDataFiles = async (fileName) => {
     }
 };
 
+export const convertDate = (date) => {
+    const dateParts = date.split('/');
+    const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+    return dateObject;
+};
+
+export const converrDatetime = (datetime) => {
+    const datetimeParts = datetime.split(' ');
+    const dateParts = datetimeParts[0].split('/');
+    const timeParts = datetimeParts[1].split(':');
+    const datetimeObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0], +timeParts[0], +timeParts[1]);
+    return datetimeObject;
+};
+
 export const deleteComments = (script) => script.replace(/(--.*)/g, '');
 
 export const getCommands = (script) => script.split(';').map(command => command.trim());

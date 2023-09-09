@@ -1,7 +1,7 @@
 import { pool } from '../db.js'
 import { getTempTableScript, getModelScript, getDropTablesScript } from '../db/getScripts.js';
 import { deleteComments, getCommands } from '../config/utils.js';
-import { getCandidatos } from '../dataFiles/getDataFiles.js';
+import { getCandidatos, getCargos, getCiudadanos } from '../dataFiles/getDataFiles.js';
 
 export const cargaMaisvaTablaTemporal = async (req, res) => {
     
@@ -36,7 +36,7 @@ export const cargaMaisvaTablaTemporal = async (req, res) => {
     const asd = await connection.query('SELECT * FROM tmpCiudadanos');
     console.log(asd);
 
-    console.log(await getCandidatos());
+    console.log(await getCargos());
 
     // Obtengo los datos del archivo
 
