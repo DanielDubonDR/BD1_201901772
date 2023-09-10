@@ -11,3 +11,7 @@ export const getModelScript = async () => {
 export const getDropTablesScript = async () => {
     return await getContentFile('../Scripts/eliminar_modelo_elecciones.sql');
 }
+
+export const getInsertsScript = async () => {
+    return await getContentFile('../Scripts/cargar_modelo_elecciones.sql');
+}

@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS CANDIDATO (
 );
 
 CREATE TABLE IF NOT EXISTS DETALLE_VOTO (
-    id_detalle_voto INTEGER NOT NULL,
+    id_detalle_voto INTEGER NOT NULL AUTO_INCREMENT,
     id_voto INTEGER NOT NULL,
     id_candidato INTEGER NOT NULL,
     PRIMARY KEY (id_detalle_voto),

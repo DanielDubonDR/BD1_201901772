@@ -1,7 +1,7 @@
 import { pool } from '../db.js'
-import { getTempTableScript, getModelScript, getDropTablesScript } from '../db/getScripts.js';
+import { getTempTableScript, getModelScript, getDropTablesScript, getInsertsScript } from '../db/getScripts.js';
 import { deleteComments, getCommands } from '../config/utils.js';
-import { getCandidatos, getCargos, getCiudadanos } from '../dataFiles/getDataFiles.js';
+import { getCandidatos, getCargos, getCiudadanos, getDepartamentos, getMesas, getPartidos, getVotaciones } from '../dataFiles/getDataFiles.js';
 
 export const cargaMaisvaTablaTemporal = async (req, res) => {
     
@@ -16,7 +16,7 @@ export const cargaMaisvaTablaTemporal = async (req, res) => {
         await pool.query('SELECT * FROM proyecto1.CIUDADANO');
     } catch (error) {
         console.error(error);
-        return res.status(409).json({ message: 'No se creado el modelo previamente' });
+        return res.status(409).json({ message: 'No se ha creado el modelo previamente' });
     }
 
     // Obtengo la instancia de la conexion
@@ -33,16 +33,109 @@ export const cargaMaisvaTablaTemporal = async (req, res) => {
         }
     }
 
-    const asd = await connection.query('SELECT * FROM tmpCiudadanos');
-    console.log(asd);
+    // Lleno la tabla temporal ciudadanos
+    const ciudadanos = await getCiudadanos();
+    for (const ciudadano of ciudadanos) {
+        try {
+            await connection.query('INSERT INTO tmpCiudadanos SET ?', ciudadano);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpCiudadanos' });
+        }
+    }
 
-    console.log(await getCargos());
+    // Lleno la tabla temporal cargos
+    const cargos = await getCargos();
+    for (const cargo of cargos) {
+        try {
+            await connection.query('INSERT INTO tmpCargos SET ?', cargo);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpCargos' });
+        }
+    }
 
-    // Obtengo los datos del archivo
+    // Lleno la tabla temporal departamentos
+    const departamentos = await getDepartamentos();
+    for (const departamento of departamentos) {
+        try {
+            await connection.query('INSERT INTO tmpDepartamentos SET ?', departamento);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpDepartamentos' });
+        }
+    }
+
+    // Lleno la tabla temporal partidos
+    const partidos = await getPartidos();
+    for (const partido of partidos) {
+        try {
+            await connection.query('INSERT INTO tmpPartidos SET ?', partido);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpPartidos' });
+        }
+    }
+
+    // Lleno la tabla temporal candidatos
+    const candidatos = await getCandidatos();
+    for (const candidato of candidatos) {
+        try {
+            await connection.query('INSERT INTO tmpCandidatos SET ?', candidato);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpCandidatos' });
+        }
+    }
+
+    // Lleno la tabla temporal mesas
+    const mesas = await getMesas();
+    for (const mesa of mesas) {
+        try {
+            await connection.query('INSERT INTO tmpMesas SET ?', mesa);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpMesas' });
+        }
+    }
+
+    // Lleno la tabla temporal votaciones
+    const votaciones = await getVotaciones();
+    for (const votacion of votaciones) {
+        try {
+            await connection.query('INSERT INTO tmpVotaciones SET ?', votacion);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en tmpVotaciones' });
+        }
+    }
+
+    const insertScript = await getInsertsScript();
+    let insertCommands = deleteComments(insertScript);
+    insertCommands = getCommands(insertCommands);
+    insertCommands = insertCommands.filter(command => command.length > 0);
+
+    // Insertar datos en el modelo
+    for(const command of insertCommands) {
+        try {
+            await connection.query(command);
+        } catch (error) {
+            console.error(error);
+            connection.destroy();
+            return res.status(409).json({ message: 'Ocurrio un error cargando los datos en el modelo', revisar: command, error: error });
+        }
+    }
 
     connection.destroy();
 
-    res.send({ message: 'Carga Masiva tabla temporal' });
+    res.status(200).json({ message: 'Datos cargados correctamente' });
 }
 
 export const elimnarModelo = async (req, res) => {

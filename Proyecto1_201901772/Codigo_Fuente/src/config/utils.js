@@ -27,7 +27,7 @@ export const convertDate = (date) => {
     return dateObject;
 };
 
-export const converrDatetime = (datetime) => {
+export const convertDatetime = (datetime) => {
     const datetimeParts = datetime.split(' ');
     const dateParts = datetimeParts[0].split('/');
     const timeParts = datetimeParts[1].split(':');
