@@ -53,33 +53,129 @@ export const getConsulta3 = async (req, res) => {
 }
 
 export const getConsulta4 = async (req, res) => {
-    res.send({ message: 'Consulta 4' });
+    const consulta = await getConsultaById(4);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 4,
+            descripcion: 'Cantidad de candidatos por partido',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta5 = async (req, res) => {
-    res.send({ message: 'Consulta 5' });
+    const consulta = await getConsultaById(5);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 5,
+            descripcion: 'Cantidad de votaciones por departamentos',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta6 = async (req, res) => {
-    res.send({ message: 'Consulta 6' });
+    const consulta = await getConsultaById(6);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 6,
+            descripcion: 'Cantidad de votos nulos',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta7 = async (req, res) => {
-    res.send({ message: 'Consulta 7' });
+    const consulta = await getConsultaById(7);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 7,
+            descripcion: 'Top 10 de edad de ciudadanos que realizaron su voto',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta8 = async (req, res) => {
-    res.send({ message: 'Consulta 8' });
+    const consulta = await getConsultaById(8);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 8,
+            descripcion: 'Top 10 de candidatos más votados para presidente y vicepresidente',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta9 = async (req, res) => {
-    res.send({ message: 'Consulta 9' });
+    const consulta = await getConsultaById(9);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 9,
+            descripcion: 'Top 5 de mesas más frecuentadas',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta10 = async (req, res) => {
-    res.send({ message: 'Consulta 10' });
+    const consulta = await getConsultaById(10);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 10,
+            descripcion: 'Top 5 la hora más concurrida en que los ciudadanos fueron a votar',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta11 = async (req, res) => {
-    res.send({ message: 'Consulta 11' });
+    const consulta = await getConsultaById(11);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 11,
+            descripcion: 'Cantidad de votos por genero',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
