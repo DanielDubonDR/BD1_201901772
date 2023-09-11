@@ -1,4 +1,4 @@
-import { pool } from '../db.js'
+import { pool } from "../db/dbConnection.js"
 import { getTempTableScript, getModelScript, getDropTablesScript, getInsertsScript } from '../db/getScripts.js';
 import { deleteComments, getCommands } from '../config/utils.js';
 import { getCandidatos, getCargos, getCiudadanos, getDepartamentos, getMesas, getPartidos, getVotaciones } from '../dataFiles/getDataFiles.js';

@@ -1,15 +1,55 @@
-import { pool } from '../db.js'
+import { pool } from "../db/dbConnection.js"
+import { getConsultaById } from '../db/getScripts.js';
 
 export const getConsulta1 = async (req, res) => {
-    res.send({ message: 'Consulta 1' });
+
+    const consulta = await getConsultaById(1);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 1,
+            descripcion: 'Nombre de los candidatos a presidentes y vicepresidentes por partido',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const getConsulta2 = async (req, res) => {
-    res.send({ message: 'Consulta 2' });
+    
+    const consulta = await getConsultaById(1);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 2,
+            descripcion: 'Numero de candidatos por partido',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta3 = async (req, res) => {
-    res.send({ message: 'Consulta 3' });
+    
+    const consulta = await getConsultaById(3);
+
+    try {
+        const result = await pool.query(consulta);
+        const response = {
+            no_consulta: 3,
+            descripcion: 'Mostrar el nombre de los candidatos a alcalde por partido',
+            resultado: result[0]
+        }
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
 
 export const getConsulta4 = async (req, res) => {
