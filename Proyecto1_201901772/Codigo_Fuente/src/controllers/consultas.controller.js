@@ -20,13 +20,13 @@ export const getConsulta1 = async (req, res) => {
 
 export const getConsulta2 = async (req, res) => {
     
-    const consulta = await getConsultaById(1);
+    const consulta = await getConsultaById(2);
 
     try {
         const result = await pool.query(consulta);
         const response = {
             no_consulta: 2,
-            descripcion: 'Numero de candidatos por partido',
+            descripcion: 'Numero de candidatos a diputados por partido',
             resultado: result[0]
         }
         res.status(200).json(response);

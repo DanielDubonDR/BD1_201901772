@@ -11,7 +11,8 @@ SELECT
     (SELECT COUNT(*) FROM CANDIDATO c3 WHERE c3.id_partido = p.id_partido AND c3.id_cargo = 5) AS 'Parlamento_centroamericano',
     (SELECT COUNT(*) FROM CANDIDATO c4 WHERE c4.id_partido = p.id_partido AND c4.id_cargo IN (3,4,5)) AS 'Total_de_diputados'
 FROM
-    PARTIDO p;
+    PARTIDO p
+ORDER BY Total_de_diputados ASC;
 
 -- Consulta 3
 SELECT p.nombre AS 'Partido', c.nombre AS 'Alcalde'
@@ -27,7 +28,8 @@ SELECT
     (SELECT COUNT(*) FROM CANDIDATO c3 WHERE c3.id_partido = p.id_partido AND c3.id_cargo = 6) AS 'Alcaldes',
     (SELECT COUNT(*) FROM CANDIDATO c5 WHERE c5.id_partido = p.id_partido AND c5.id_cargo IN (1,2,3,4,5,6)) AS 'Total'
 FROM
-    PARTIDO p;
+    PARTIDO p
+ORDER BY Total ASC;
 
 -- Consulta 5
 SELECT d.nombre AS 'Departamento', COUNT(*) AS 'Votos'
@@ -82,9 +84,9 @@ ORDER BY Votos DESC
 LIMIT 5;
 
 -- Consulta 10
-SELECT HOUR(fecha_hora) AS 'Hora', COUNT(*) AS 'Votos'
+SELECT CONCAT(LPAD(HOUR(fecha_hora), 2, '0'), ':', LPAD(MINUTE(fecha_hora), 2, '0'), ':00') AS 'Hora', COUNT(*) AS 'Votos'
 FROM VOTO
-GROUP BY HOUR(fecha_hora)
+GROUP BY CONCAT(LPAD(HOUR(fecha_hora), 2, '0'), ':', LPAD(MINUTE(fecha_hora), 2, '0'), ':00')
 ORDER BY Votos DESC
 LIMIT 5;
 
