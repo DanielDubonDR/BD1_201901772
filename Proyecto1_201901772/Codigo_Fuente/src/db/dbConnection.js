@@ -8,3 +8,10 @@ export const pool = createPool({
     database: dbConfig.database,
     port: dbConfig.port,
 });
+
+export const firstPool = createPool({
+    host: dbConfig.host,
+    user: dbConfig.user,
+    password: dbConfig.password,
+    port: dbConfig.port,
+});

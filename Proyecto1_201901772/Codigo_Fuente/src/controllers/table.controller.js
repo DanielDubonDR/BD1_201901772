@@ -1,4 +1,4 @@
-import { pool } from "../db/dbConnection.js"
+import { pool, firstPool } from "../db/dbConnection.js"
 import { getTempTableScript, getModelScript, getDropTablesScript, getInsertsScript } from '../db/getScripts.js';
 import { deleteComments, getCommands } from '../config/utils.js';
 import { getCandidatos, getCargos, getCiudadanos, getDepartamentos, getMesas, getPartidos, getVotaciones } from '../dataFiles/getDataFiles.js';
@@ -175,7 +175,7 @@ export const crearModelo = async (req, res) => {
 
     for (const command of modelCommands) {
         try {
-            await pool.query(command);
+            await firstPool.query(command);
         }
         catch (error) {
             console.error(error);
@@ -184,6 +184,7 @@ export const crearModelo = async (req, res) => {
     }
 
     try {
+        await pool.query('USE proyecto1')
         tables = await pool.query('SHOW TABLES');
         tables = tables[0];
     } catch (error) {
