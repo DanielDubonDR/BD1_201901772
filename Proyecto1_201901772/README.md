@@ -18,11 +18,12 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 - [`Introducción`]()
 - [`Modelado de la Base de Datos`](#modelado-de-la-base-de-datos)
-  - [Modelo Conceptual](#🪧-modelo-conceptual)
-  - [Modelo Lógico](#🪧-modelo-lógico)
-  - [Modelo Físico](#🪧-modelo-fisico)
-- [`Requerimientos`](#requirimientos)
-- [`API`](#api)
+  - [`Modelo Conceptual`](#🪧-modelo-conceptual)
+  - [`Modelo Lógico`](#🪧-modelo-lógico)
+  - [`Modelo Físico`](#🪧-modelo-fisico)
+  - [`Scripts`](#📜-scripts)
+- [`API`](#requirimientos)
+- [`Código Fuente`](#código-fuente)
 
 ## Introducción
 
@@ -30,10 +31,20 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 ### 🪧 Modelo Conceptual
 
+<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Conceptual.png" width="800"/></div>
+
 ### 🪧 Modelo Lógico
+
+<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Logico.png" width="800"/></div>
 
 ### 🪧 Modelo Fisico
 
-## Requirimientos
+<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Fisico%20(ER).png" width="800"/></div>
+
+### 🪧 Modelo Fisico
+
+### 📜 Scripts
 
 ## API
+
+## Código Fuente
