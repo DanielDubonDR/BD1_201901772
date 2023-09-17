@@ -1,6 +1,4 @@
-# 📑 MANUAL TÉCNICO
-
-# 🚀 [BD1]P1_201901772
+# 📑 MANUAL TÉCNICO [BD1]P1_201901772
 
 ```bash
 Universidad de San Carlos de Guatemala
@@ -27,13 +25,78 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 ## Introducción
 
+Se diseñó y desarrolló un sistema de gestión de datos para las elecciones generales de 2023, abarcando un modelo conceptual, lógico y físico de la base de datos, junto con su implementación en MySQL. Además, se creó una API en JavaScript y Node.js para administrar y consultar eficazmente la base de datos, permitiendo la carga masiva de datos y la ejecución de consultas SQL necesarias para el proceso electoral.
+
 ## Modelado de la Base de Datos
 
 ### 🪧 Modelo Conceptual
 
+El modelo conceptual se utilizó para definir las entidades y relaciones clave en el sistema, proporcionando una vista de alto nivel de la estructura de datos requerida. Esto ayudó a comprender la estructura general de los datos y las relaciones entre ellos, sin preocuparse por detalles técnicos.
+
+**Entidades Potenciales**
+- CUIDADANO
+- VOTO
+- MESA
+- CARGO
+- CANDIDATO
+- DEPARTAMENTO
+- PARTIDO
+
+**MODELO**
+
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Conceptual.png" width="800"/></div>
 
 ### 🪧 Modelo Lógico
+
+En esta fase, se tradujo el modelo conceptual en un diseño lógico más detallado. Se utilizó la herramienta data modeler para definir las tablas, claves primarias y atributos correspondientes considerando las restricciones y reglas de negocio.
+
+Al analizar el archivo de datos [`votaciones.csv`](./Codigo_Fuente/src/dataFiles/votaciones.csv) se pudo notar que habia duplicidad de datos.
+
+<div align="center"><img src="../sources/tb1.png"/></div>
+
+
+Por lo que se llevo acabo a realizar la primera forma normal a la entidad `VOTO`, dando como resultado dos entidades `VOTO`, `DETALLE_VOTO`, esto nos ayuda a no tener duplicidad de datos.
+
+
+<div align="center"><img src="../sources/tb2.png"/></div>
+
+También se establecieron de una forma mas lógica las relaciones entre las entidades:
+
+- **CIUDADANO - VOTO**
+  
+  - *De izquierda a derecha*
+  - *De dercha a izquierda*
+
+- **VOTO - MESA**
+  
+  - *De izquierda a derecha*
+  - *De dercha a izquierda*
+
+- **MESA - DEPARTAMENTO**
+  
+  - *De arriba hacia abajo*
+  - *De abajo hacia abajo*
+
+- **VOTO - DETALLE_VOTO**
+  
+  - *De arriba hacia abajo*
+  - *De abajo hacia abajo*
+
+- **DETALLE_VOTO - CANDIDATO**
+  
+  - *De arriba hacia abajo*
+  - *De abajo hacia abajo*
+
+- **CANIDATO - PARTIDO**
+  
+  - *De izquierda a derecha*
+  - *De dercha a izquierda*
+
+- **CARGO - CANDIDATO**
+  
+  - *De izquierda a derecha*
+  - *De dercha a izquierda*
+
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Logico.png" width="800"/></div>
 
@@ -41,9 +104,10 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Fisico%20(ER).png" width="800"/></div>
 
-### 🪧 Modelo Fisico
-
 ### 📜 Scripts
+
+
+Aquí se ubican los diversos scripts utilizados para ejecutar procesos relacionados con la creación, inserción, manipulación y consulta de datos en la base de datos.
 
 - [`Crear Modelo`](./Scripts/modelo_elecciones.sql)
 
@@ -67,19 +131,12 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 ## API
 
-Esta API fue realizada con el legunaje de programación JavaScript y el entorno de ejcución NodeJS v18.17.0
-
-Por defecto se ejecuta en el puerto 4000
-
-**Ejemplo**
-```JavaScript
-http://${ip}:${port}/consulta1
-```
+Esta API fue realizada con el legunaje de programación JavaScript y el entorno de ejecución NodeJS v18.17.0. Por defecto se ejecuta en el puerto 4000
 
 ### EndPoints
 
 | EndPoint | Método HTTP | Descripción |
-| ------ | ------ | ------ |
+| ------ | :------: | ------ |
 | /consulta1 | `GET` | Devuelve el nombre de los candidatos a presidentes y vicepresidentes por partido  |
 | /consulta2 | `GET` | Devuelve el número de candidatos a diputados |
 | /consulta3 | `GET` | Devuelve el nombre de los candidatos a alcalde por partido  |
@@ -91,6 +148,13 @@ http://${ip}:${port}/consulta1
 | /consulta9 | `GET` | Devuelve el top 5 de mesas más frecuentadas |
 | /consulta10 | `GET` | Devuelve el top 5 la hora más concurrida en que los ciudadanos fueron a votar  |
 | /consulta11 | `GET` | Devuelve la cantidad de votos por género |
+
+**Ejemplo**
+```JavaScript
+http://${ip}:${port}/consulta1
+```
+
+<div align="center"><img src="../sources/ejemploEnpoint.png" width="800"/></div>
 
 ## Código Fuente
 
