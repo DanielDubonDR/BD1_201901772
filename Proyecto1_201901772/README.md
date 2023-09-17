@@ -31,6 +31,8 @@ Se diseñó y desarrolló un sistema de gestión de datos para las elecciones ge
 
 ### 🪧 Modelo Conceptual
 
+<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Conceptual.png" width="800"/></div>
+
 El modelo conceptual se utilizó para definir las entidades y relaciones clave en el sistema, proporcionando una vista de alto nivel de la estructura de datos requerida. Esto ayudó a comprender la estructura general de los datos y las relaciones entre ellos, sin preocuparse por detalles técnicos.
 
 **Entidades Potenciales**
@@ -42,11 +44,9 @@ El modelo conceptual se utilizó para definir las entidades y relaciones clave e
 - DEPARTAMENTO
 - PARTIDO
 
-**MODELO**
-
-<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Conceptual.png" width="800"/></div>
-
 ### 🪧 Modelo Lógico
+
+<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Logico.png" width="800"/></div>
 
 En esta fase, se tradujo el modelo conceptual en un diseño lógico más detallado. Se utilizó la herramienta data modeler para definir las tablas, claves primarias y atributos correspondientes considerando las restricciones y reglas de negocio.
 
@@ -64,45 +64,59 @@ También se establecieron de una forma mas lógica las relaciones entre las enti
 
 - **CIUDADANO - VOTO**
   
-  - *De izquierda a derecha*
-  - *De dercha a izquierda*
+  - *De izquierda a derecha:* Cada ciudadano puede estar asociado con un o muchos votos
+
+  - *De dercha a izquierda:* Cada voto debe estar asociado con un y solamente un ciudadano.
+    
 
 - **VOTO - MESA**
   
-  - *De izquierda a derecha*
-  - *De dercha a izquierda*
+  - *De izquierda a derecha:* Cada voto debe estar asocidado con una y solamente una mesa
+
+  - *De dercha a izquierda:* Cada mesa puede estar asociado con un o muchos votos
 
 - **MESA - DEPARTAMENTO**
   
-  - *De arriba hacia abajo*
-  - *De abajo hacia abajo*
+  - *De arriba hacia abajo:* Cada mesa debe estar asociado a un y solamente un departamento
+
+  - *De abajo hacia abajo:* Cada departamento puede estar asociado a una o muchas mesas
 
 - **VOTO - DETALLE_VOTO**
   
-  - *De arriba hacia abajo*
-  - *De abajo hacia abajo*
+  - *De arriba hacia abajo:* Cada puede estar asociado a un o muchos detalles de votos
+
+  - *De abajo hacia abajo:* Cada detalle de voto debe estar asociado a un y solamente un voto
 
 - **DETALLE_VOTO - CANDIDATO**
   
-  - *De arriba hacia abajo*
-  - *De abajo hacia abajo*
+  - *De arriba hacia abajo:* Cada detalle voto debe estar asociado a un y solamente un candidato
+
+  - *De abajo hacia abajo:* Cada candidato puede estar asociado a un o muchos detalles de votos
 
 - **CANIDATO - PARTIDO**
   
-  - *De izquierda a derecha*
-  - *De dercha a izquierda*
+  - *De izquierda a derecha:* Cada candidato debe estar asociado a un y solamente un partido
+
+  - *De dercha a izquierda:* Cada partido puede estar asociado a un o muchos candidatos
 
 - **CARGO - CANDIDATO**
   
-  - *De izquierda a derecha*
-  - *De dercha a izquierda*
+  - *De izquierda a derecha:* Cada cargo puede estar asociado a un o muchos candidatos
 
-
-<div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Logico.png" width="800"/></div>
+  - *De dercha a izquierda:* Cada candidato debe estar asociado a un y solamente un cargo
 
 ### 🪧 Modelo Fisico
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Fisico%20(ER).png" width="800"/></div>
+
+- ***TABLA CIUDADANO***
+- ***TABLA VOTO***
+- ***TABLA MESA***
+- ***TABLA DEPARTAMENTO***
+- ***TABLA DETALLE_VOTO***
+- ***TABLA CANDIDATO***
+- ***TABLA CARGO***
+- ***TABLA PARTIDO***
 
 ### 📜 Scripts
 
