@@ -16,9 +16,9 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 
 - [`Introducción`]()
 - [`Modelado de la Base de Datos`](#modelado-de-la-base-de-datos)
-  - [`Modelo Conceptual`](#🪧-modelo-conceptual)
-  - [`Modelo Lógico`](#🪧-modelo-lógico)
-  - [`Modelo Físico`](#🪧-modelo-fisico)
+  - [`Modelo Conceptual`](#🪧modelo-conceptual)
+  - [`Modelo Lógico`](#🪧modelo-logico)
+  - [`Modelo Físico`](#🪧modelo-lógico)
   - [`Scripts`](#📜-scripts)
 - [`API`](#requirimientos)
 - [`Código Fuente`](#código-fuente)
@@ -29,7 +29,7 @@ Se diseñó y desarrolló un sistema de gestión de datos para las elecciones ge
 
 ## Modelado de la Base de Datos
 
-### 🪧 Modelo Conceptual
+### 🪧Modelo Conceptual
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Conceptual.png" width="800"/></div>
 
@@ -44,7 +44,7 @@ El modelo conceptual se utilizó para definir las entidades y relaciones clave e
 - DEPARTAMENTO
 - PARTIDO
 
-### 🪧 Modelo Lógico
+### 🪧Modelo Lógico
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Logico.png" width="800"/></div>
 
@@ -105,7 +105,7 @@ También se establecieron de una forma mas lógica las relaciones entre las enti
 
   - *De dercha a izquierda:* Cada candidato debe estar asociado a un y solamente un cargo
 
-### 🪧 Modelo Fisico
+### 🪧Modelo Fisico
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Fisico%20(ER).png" width="800"/></div>
 
@@ -176,7 +176,7 @@ Almacena los datos de los candidatos a cargos públicos.
 | id_candidato | INTEGER | `LLAVE PRIMARIA` Identificador único del candidato |
 | nombre | VARCHAR(40) | Nombre del candidato |
 | fecha_nac | DATETIME | Fecha de nacimiento del candidato |
-| id_cargo | INTEGER | I`LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `CARGO` |
+| id_cargo | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `CARGO` |
 | id_partido | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `PARTIDO` |
 
 - ***TABLA CARGO:***
