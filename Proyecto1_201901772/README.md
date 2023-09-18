@@ -109,14 +109,95 @@ También se establecieron de una forma mas lógica las relaciones entre las enti
 
 <div align="center"><img src="../Proyecto1_201901772/Modelos/IMAGEN/Modelo%20Fisico%20(ER).png" width="800"/></div>
 
-- ***TABLA CIUDADANO***
-- ***TABLA VOTO***
-- ***TABLA MESA***
-- ***TABLA DEPARTAMENTO***
-- ***TABLA DETALLE_VOTO***
-- ***TABLA CANDIDATO***
-- ***TABLA CARGO***
-- ***TABLA PARTIDO***
+En esta fase, se tradujo el modelo lógico en un modelo físico, esto implicó definir la estructura física de las tablas, atributos con su tipo de dato con el que sera almacenado, claves primarias que identificaran de forma unica a cada registro, llaves foráneas que definará las relaciones entre las diferentes tablas y estableciendo las restricciones del modelo. Se utilizó la herramienta data modeler para generar este modelo que permitió crear los diferentes scripts de la base de datos.
+
+**Descripción de las tablas:**
+
+- ***TABLA CIUDADANO:*** 
+
+Almacena los datos de los ciudadanos que realizaron su voto.
+
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| dpi | VARCHAR(13) | `LLAVE PRIMARIA` Identificador único del ciudadano |
+| nombre | VARCHAR(30) | Nombre del ciudadano |
+| apellido | VARCHAR(30) | Apellido del ciudadano |
+| direccion | VARCHAR(100) | Dirección del ciudadano |
+| telefono | VARCHAR(10) | Teléfono del ciudadano |
+| edad | INTEGER | Edad del ciudadano |
+| genero | VARCHAR(1) | Género del ciudadano |
+
+
+- ***TABLA VOTO:*** 
+
+Almacena los datos de los votos realizados por los ciudadanos.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_voto | INTEGER | `LLAVE PRIMARIA` Identificador único del voto |
+| fecha_hora | DATETIME | Fecha y hora en la que se realizó el voto |
+| dpi | VARCHAR(13) | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `CIUDADANO` |
+| id_mesa | INTEGER | Identificador único de la mesa donde se realizó el voto |
+
+- ***TABLA MESA:*** 
+
+Almacena los datos de las mesas de votación.
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_mesa | INTEGER | `LLAVE PRIMARIA` Identificador único de la mesa |
+| id_departamento | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `DEPARTAMENTO` |
+
+- ***TABLA DEPARTAMENTO:***
+
+Almacena los datos de los departamentos de Guatemala.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_departamento | INTEGER | `LLAVE PRIMARIA` Identificador único del departamento |
+| nombre | VARCHAR(20) | Nombre del departamento |
+
+- ***TABLA DETALLE_VOTO:***
+
+Almacena del detalle de los votos realizados por los ciudadanos.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_detalle_voto | INTEGER | `LLAVE PRIMARIA` Identificador único del detalle del voto |
+| id_voto | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `VOTO` |
+| id_candidato | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `CANDIDATO` |
+
+- ***TABLA CANDIDATO:***
+
+Almacena los datos de los candidatos a cargos públicos.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_candidato | INTEGER | `LLAVE PRIMARIA` Identificador único del candidato |
+| nombre | VARCHAR(40) | Nombre del candidato |
+| fecha_nac | DATETIME | Fecha de nacimiento del candidato |
+| id_cargo | INTEGER | I`LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `CARGO` |
+| id_partido | INTEGER | `LLAVE FORÁNEA` que permite la relación muchos a uno con la tabla `PARTIDO` |
+
+- ***TABLA CARGO:***
+
+Almacena los datos de los cargos públicos.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_cargo | INTEGER | `LLAVE PRIMARIA` Identificador único del cargo |
+| cargo | VARCHAR(40) | Nombre del cargo |
+
+- ***TABLA PARTIDO:***
+
+Almacena los datos de los partidos políticos.
+
+| Atributo | Tipo de Dato | Descripción |
+| ------ | ------ | ------ |
+| id_partido | INTEGER | `LLAVE PRIMARIA` Identificador único del partido |
+| nombre | VARCHAR(50) | Nombre del partido |
+| siglas | VARCHAR(20) | Siglas del partido |
+| fundacion | DATE | Fecha de fundación del partido |
 
 ### 📜 Scripts
 
