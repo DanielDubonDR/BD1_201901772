@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="6C1F1417-6661-3844-BE77-143ABA6E60F4" mainViewID="AE21DC05-50C9-1F0B-5638-DA0E188B25AE">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:05:34 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>
