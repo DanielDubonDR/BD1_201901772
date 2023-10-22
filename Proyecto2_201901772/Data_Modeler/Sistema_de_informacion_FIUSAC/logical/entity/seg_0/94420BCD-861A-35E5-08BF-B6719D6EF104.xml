@@ -1,0 +1,83 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="94420BCD-861A-35E5-08BF-B6719D6EF104" name="HISTORIAL_TRANSACCIONES">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:31:45 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_transaccion" id="7255314B-9644-E228-4D4F-DABEECD425BE">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:31:53 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="fecha_hora" id="63F239A1-184C-DFF2-F548-B9FF702277FC">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:31:59 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="descripcion" id="CEBC92E9-8287-B705-64DA-CAFD0DF66192">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:32:22 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="tipo" id="F78FBB49-58AC-E2E7-7999-DC9F156451EE">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:32:54 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="8348A199-9F6D-C373-3992-F54A820C4870" name="TRANSACCION PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:33:01 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7255314B-9644-E228-4D4F-DABEECD425BE</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,109 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E0D5E373-E89B-70F0-DA7A-C38A18EC41DD" name="CURSO">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:38:56 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="codigo_curso" id="1B4D2800-84F5-007D-CEBD-12E70A658EAF">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:39:23 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nombre" id="6FF2D96D-53F7-E00E-69C0-847240929C3F">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:39:47 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="creditos_necesarios" id="73CD77F3-1001-E9CF-9D3C-BCE396712415">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:40:42 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="creditos_acredita" id="10B53916-764D-399B-65BF-2DBDF0E1105B">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:40:59 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="obligatorio" id="B331CD64-33BC-D21C-27B8-B21102995724">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:44:00 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_carrera" id="16D53699-DA85-CDFD-B672-16C16E5132ED">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:43:57 UTC</createdTime>
+<generatorID>C7F48315-E184-A99B-AB8E-0132E35C91BE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<referedAttribute>1B198779-C330-687F-42A1-7D6025D592E8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="EB96C756-7B3E-58D1-FF22-AEB5503770A5" name="CURSO PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:39:45 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>1B4D2800-84F5-007D-CEBD-12E70A658EAF</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

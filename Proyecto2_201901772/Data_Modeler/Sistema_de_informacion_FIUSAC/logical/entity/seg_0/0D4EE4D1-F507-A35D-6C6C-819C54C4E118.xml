@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="EEA6377B-C27F-3AD8-EFD1-CE7DD0E75E6D" name="ESTUDIANTE">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="0D4EE4D1-F507-A35D-6C6C-819C54C4E118" name="CURSO_HABILITADO">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:06:21 UTC</createdTime>
+<createdTime>2023-10-18 09:50:26 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
@@ -15,156 +15,120 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="carnet" id="E8C20FFF-59D7-091B-5A5B-88EA9D73F6EB">
+<Attribute name="id_curso_habilitado" id="232E6927-6E9F-E2C1-73F8-151F0BB517E3">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:06:32 UTC</createdTime>
+<createdTime>2023-10-18 09:50:38 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
 </engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ciclo" id="1C2B84D6-DD78-E1AA-EE69-82F96FA3DF5A">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:51:58 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2</dataTypeSize>
+<ownDataTypeParameters>2,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cupo_maximo" id="D931F32B-87B6-C60D-9962-2E314A315E78">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 09:53:30 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="seccion" id="1E61004E-DF47-9534-32EA-EA6848B3BBEF">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 10:21:27 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="anio" id="B7F03824-BDD2-EAD8-973E-B709C3AE8999">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 10:21:51 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="estudiantes_asignados" id="956051BA-9C24-7A64-35DC-DDD6AEFA8B98">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 10:22:31 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="siff_docente" id="282E94D0-AC12-AD8E-50BF-4AD2FDACF9E9">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-18 11:52:31 UTC</createdTime>
+<generatorID>31FE1BE8-5F68-8C13-2E4F-B197155EAAC7</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<referedAttribute>129B15D0-E19E-59A1-8728-D951508CB7CB</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT027</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="nombre" id="0822CF74-DC0C-D625-7B2A-9C6C917C17A8">
+<Attribute name="codigo_curso" id="C5ABD384-508E-10F0-6DFE-9ABC88A6FAC4">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:16:36 UTC</createdTime>
+<createdTime>2023-10-18 11:54:18 UTC</createdTime>
+<generatorID>4B3BE634-07DF-AF42-17EF-E5C899B6FFCE</generatorID>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
 </engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100</dataTypeSize>
-<ownDataTypeParameters>100,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="apellido" id="9AA3F954-5F17-0279-9BB2-C7BD55AB4970">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:17:32 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100</dataTypeSize>
-<ownDataTypeParameters>100,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="fecha_nac" id="43A732BA-504E-1D79-B5CD-CECA1FD5AA0D">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:17:50 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT007</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="correo" id="EEA2229F-7466-BD74-9EBA-FA45EE40C348">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:18:16 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100</dataTypeSize>
-<ownDataTypeParameters>100,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="telefono" id="64CF425E-7D46-291C-8D02-6707860A9F5D">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:19:05 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="direccion" id="B5B8092F-9DB5-BB9C-D560-72D10E740BA2">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:20:41 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>130</dataTypeSize>
-<ownDataTypeParameters>130,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="dpi" id="DC07E43F-B802-2EC2-0D17-CE804D3777FA">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:21:10 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
+<referedAttribute>1B4D2800-84F5-007D-CEBD-12E70A658EAF</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT027</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="creditos" id="692D2BB3-33B9-B24D-564F-22DB55ED27DE">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:23:12 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="fecha_registro" id="42DCED4F-59CE-F72C-5655-50D76D989F67">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:23:43 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT015</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="id_carrera" id="06589D5B-69C1-9822-9EE0-0D274ED77789">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:36:11 UTC</createdTime>
-<generatorID>493D466B-589B-037A-FF03-304CC7C8C7EE</generatorID>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<referedAttribute>1B198779-C330-687F-42A1-7D6025D592E8</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="3CFE340A-EF5E-D200-BED3-F65D2D2ED2B2" name="ESTUDIANTE PK">
+<identifier id="BC0F0B07-0D61-F440-2B31-4A0E3B8923BF" name="CURSO_HABILITADO PK">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 09:16:32 UTC</createdTime>
+<createdTime>2023-10-18 09:51:26 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>E8C20FFF-59D7-091B-5A5B-88EA9D73F6EB</attributeRef>
+<attributeRef>232E6927-6E9F-E2C1-73F8-151F0BB517E3</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>
