@@ -101,8 +101,8 @@ procRegistrarEstudiante:BEGIN
     ELSEIF validarDPI(dpi) = FALSE THEN
         CALL errMessage('El DPI debe ser de tipo numérico de 13 dígitos y no puede estar vacío');
         LEAVE procRegistrarEstudiante;
-    ELSEIF validarIdCarrera(idCarrera) = FALSE THEN
-        CALL errMessage('El id de la carrera debe ser de tipo numérico y no puede estar vacío');
+    ELSEIF validarNumero(idCarrera) = FALSE THEN
+        CALL errMessage('El id de la carrera debe ser un número entero positivo y no puede estar vacío');
         LEAVE procRegistrarEstudiante;
     END IF;
 
@@ -192,3 +192,54 @@ END;
 $$
 DELIMITER ;
 
+# ------------------------------------------ crearCurso ------------------------------------------
+DROP PROCEDURE IF EXISTS crearCurso;
+DELIMITER $$
+CREATE PROCEDURE crearCurso(
+    IN codigo_curso BIGINT,
+    IN nombre VARCHAR(150),
+    IN creditos_necesarios INT,
+    IN creditos_otorga INT,
+    IN idCarrera INT,
+    IN obligatorio BOOLEAN
+)
+procCrearCurso:BEGIN
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarNombreCurso(nombre) = FALSE THEN
+        CALL errMessage('El nombre debe ser de tipo texto y no puede estar vacío');
+        LEAVE procCrearCurso;
+    ELSEIF validarNumeroCon0(creditos_necesarios) = FALSE THEN
+        CALL errMessage('Los créditos necesarios puede ser 0 o un entero positivo');
+        LEAVE procCrearCurso;
+    ELSEIF validarNumeroCon0(creditos_otorga) = FALSE THEN
+        CALL errMessage('Los créditos que otorga puede ser 0 o un entero positivo');
+        LEAVE procCrearCurso;
+    ELSEIF validarNumeroCon0(idCarrera) = FALSE THEN
+        CALL errMessage('El id de la carrera puede ser 0 (área común) o un entero positivo');
+        LEAVE procCrearCurso;
+    ELSEIF validarBooleano(obligatorio) = FALSE THEN
+        CALL errMessage('El campo obligatorio debe ser de tipo booleano *0=no, 1=sí, no puede estar vacío');
+        LEAVE procCrearCurso;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigo_curso) = TRUE THEN
+        CALL errMessage('Ya existe un curso asociado a ese código');
+        LEAVE procCrearCurso;
+    ELSEIF verificarNombreCurso(nombre) = TRUE THEN
+        CALL errMessage('Ya existe un curso asociado a ese nombre');
+        LEAVE procCrearCurso;
+    ELSEIF verificarCarrera(idCarrera) = FALSE THEN
+        CALL errMessage('No existe una carrera asociada al id ingresado');
+        LEAVE procCrearCurso;
+    END IF;
+
+    INSERT INTO CURSO (codigo_curso, nombre, creditos_necesarios, creditos_acredita, id_carrera, obligatorio)
+    VALUES (codigo_curso, nombre, creditos_necesarios, creditos_otorga, idCarrera, obligatorio);
+
+    CALL message(CONCAT('Curso ', codigo_curso, ': ', nombre, ' registrado exitosamente'));
+
+END;
+$$
+DELIMITER ;

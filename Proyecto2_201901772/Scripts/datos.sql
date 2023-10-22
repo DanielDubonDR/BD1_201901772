@@ -46,6 +46,25 @@ call registrarDocente(
     'pph@gmail.com',
     23143820,
     'Guatemala',
-    1234567890123,
-    123456789
+    1234567890125,
+    123456782
+);
+
+# -------------------------------------------------- CURSO ----------------------------------------
+call crearCurso(
+    0281,
+    'Sistemas Operativos 1',
+    0,
+    5,
+    1,
+    true
+);
+
+call crearCurso(
+    0282,
+    'Sistemas Operativos 2',
+    0,
+    5,
+    0,
+    false
 );

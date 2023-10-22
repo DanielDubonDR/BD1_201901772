@@ -171,29 +171,6 @@ END;
 $$
 DELIMITER ;
 
-# -------------------------------------------- validarIdCarrera --------------------------------------------
-DROP FUNCTION IF EXISTS validarIdCarrera;
-DELIMITER $$
-CREATE FUNCTION validarIdCarrera(id_carrera INT)
-RETURNS BOOLEAN DETERMINISTIC
-BEGIN
-    DECLARE resultado BOOLEAN;
-    SET resultado = FALSE;
-    IF id_carrera REGEXP '^[0-9]+$' THEN
-        SET resultado = TRUE;
-    ELSE
-        SET resultado = FALSE;
-    END IF;
-
-    IF id_carrera IS NULL OR id_carrera = '' THEN
-        SET resultado = FALSE;
-    END IF;
-
-    RETURN resultado;
-END;
-$$
-DELIMITER ;
-
 # -------------------------------------------- verificarCarnet --------------------------------------------
 DROP FUNCTION IF EXISTS verificarCarnet;
 DELIMITER $$
@@ -295,6 +272,129 @@ BEGIN
     SET resultado = FALSE;
     IF EXISTS(SELECT * FROM DOCENTE WHERE dpi = dpiDocente) THEN
         SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarNumero --------------------------------------------
+DROP FUNCTION IF EXISTS validarNumero;
+DELIMITER $$
+CREATE FUNCTION validarNumero(numero INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF numero REGEXP '^[0-9]+$' THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
+    END IF;
+
+    IF numero IS NULL OR numero = '' THEN
+        SET resultado = FALSE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarBooleano --------------------------------------------
+DROP FUNCTION IF EXISTS validarBooleano;
+DELIMITER $$
+CREATE FUNCTION validarBooleano(booleano BOOLEAN)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+
+    IF booleano = 0 OR booleano = 1 THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
+    END IF;
+
+    IF booleano IS NULL THEN
+        SET resultado = FALSE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCurso --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCurso;
+DELIMITER $$
+CREATE FUNCTION verificarCurso(idCurso BIGINT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF EXISTS(SELECT * FROM CURSO WHERE codigo_curso = idCurso) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarNombreCurso --------------------------------------------
+DROP FUNCTION IF EXISTS verificarNombreCurso;
+DELIMITER $$
+CREATE FUNCTION verificarNombreCurso(nombreCurso VARCHAR(150))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF EXISTS(SELECT * FROM CURSO WHERE nombre = nombreCurso) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarNombreCurso --------------------------------------------
+DROP FUNCTION IF EXISTS validarNombreCurso;
+DELIMITER $$
+CREATE FUNCTION validarNombreCurso(nombreCurso VARCHAR(150))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF nombreCurso REGEXP '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$' THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
+    END IF;
+
+    IF nombreCurso IS NULL OR nombreCurso = '' THEN
+        SET resultado = FALSE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarNumeroCon0 --------------------------------------------
+DROP FUNCTION IF EXISTS validarNumeroCon0;
+DELIMITER $$
+CREATE FUNCTION validarNumeroCon0(numero INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF numero REGEXP '^[0-9]+$' THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
     END IF;
 
     RETURN resultado;
