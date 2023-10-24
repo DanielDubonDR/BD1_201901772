@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1562D616-3754-09EC-2766-047293395FAF" name="HISTORIAL_TRANSACCIONES">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>94420BCD-861A-35E5-08BF-B6719D6EF104</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_transaccion" id="3B2A7071-9BAB-F91F-D171-3DAEC44E8C83">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>7255314B-9644-E228-4D4F-DABEECD425BE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="fecha_hora" id="C7629170-5495-4227-48D1-0CBD1F47CF8F">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>63F239A1-184C-DFF2-F548-B9FF702277FC</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="descripcion" id="60101B83-9390-AC36-6676-8C531C6148B8">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>CEBC92E9-8287-B705-64DA-CAFD0DF66192</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="tipo" id="CC1315FB-29B7-12D2-DF42-A7EA3E814121">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>F78FBB49-58AC-E2E7-7999-DC9F156451EE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9CB7935D-D513-5629-B10C-A27EE5E8A1A0" name="HISTORIAL_TRANSACCIONES_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>8348A199-9F6D-C373-3992-F54A820C4870</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B2A7071-9BAB-F91F-D171-3DAEC44E8C83"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

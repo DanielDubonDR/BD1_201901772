@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="58754214-8702-BD7D-546A-F79B03CE6FFD" name="HORARIO_CURSO">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>E09DF031-C089-3E2D-82E8-A8AEC13A3CC5</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_horario_curso" id="F42C1E6B-26CC-71DC-1A17-CDFA9AFAC76D">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>3E6D6899-9B50-64BC-E90A-516478E9CEBF</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="dia_semana" id="273A76E8-56BF-9E93-D107-8AD56EB728B6">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>4C00D1B1-6C2A-F628-3B91-091F363E8B99</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT042</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hora_inicio" id="C92D38B6-83EC-DD11-DF86-84B0CC0424E6">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>F5D7DC1F-C422-F10E-BA50-B9FD969CB62D</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5</dataTypeSize>
+<ownDataTypeParameters>5,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hora_final" id="5D8B4F78-F19E-C535-023A-C955F69006B9">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>7FD6C2DB-618A-9B90-BD07-EBA7BCC62A7D</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>5</dataTypeSize>
+<ownDataTypeParameters>5,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CURSO_HABILITADO_id_curso_habilitado" id="A8874FE7-8862-4A5F-B7AE-0AA63911C662">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>5EF247C6-2197-52BD-EE1A-3A1A0F6668B5</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6577434F-45C8-E6F4-456A-426EE1A7CBE0" referredColumn="8BC6CB42-0331-6FF9-7480-00F12F6E95FA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="873A4E8A-4FA8-F0DA-4D99-03632CA5D254" name="HORARIO_CURSO_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>DBCAE172-2B56-5253-34B2-CF3621D91237</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F42C1E6B-26CC-71DC-1A17-CDFA9AFAC76D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="211497CC-BE2E-EEBC-430C-2F3F88C1C6CF" name="HORARIO_CURSO_CURSO_HABILITADO_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>2A189354-16E5-82E0-02C3-2A7532B892C1</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A8874FE7-8862-4A5F-B7AE-0AA63911C662"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

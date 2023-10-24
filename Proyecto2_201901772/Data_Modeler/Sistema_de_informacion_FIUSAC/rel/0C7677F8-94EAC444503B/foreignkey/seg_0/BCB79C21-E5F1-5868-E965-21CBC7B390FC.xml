@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="BCB79C21-E5F1-5868-E965-21CBC7B390FC" containerWithKeyObject="3B7D7EA1-C323-4EB1-282A-BDE29CBD8071" localFKIndex="655B1196-C822-8B1C-558E-7BB239375761" name="CURSO_HABILITADO_DOCENTE_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>31FE1BE8-5F68-8C13-2E4F-B197155EAAC7</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<referredTableLongName>DOCENTE</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>9A4706A7-2447-1386-181F-6D3536D6C0BB</referredTableID>
+<keyObject>06550801-2B6B-966F-F5FF-4877E207DCE4</keyObject>
+<referredKeyID>06550801-2B6B-966F-F5FF-4877E207DCE4</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>siff_docente</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

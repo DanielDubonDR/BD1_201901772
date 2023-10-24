@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9A4706A7-2447-1386-181F-6D3536D6C0BB" name="DOCENTE">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>AA20D8F7-8C32-95F1-2616-5AAD046D7A99</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="siff_docente" id="C2C8DA41-0C31-9482-D346-87F8C574969F">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>129B15D0-E19E-59A1-8728-D951508CB7CB</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nombre" id="2D55396E-9C80-0425-186D-3D0354FF7040">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>93643BE4-0B2C-9FD3-B382-6D39B5FA6CEC</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="apellido" id="F7C1BFA2-5F41-30AE-70C5-582D19A69169">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>7224B21D-1806-43A6-93B7-F3D775CFC4F2</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="fecha_nac" id="EE09D501-17A1-D482-D324-9519D56A6077">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>DB733D8F-F238-3D52-E5A9-DE4AEC2430AB</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="correo" id="F42B8C08-F50E-EC6D-8A4A-7B561E39A6D3">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>26D9AC14-687F-C0B4-B4FB-A4BDD88732B3</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="telefono" id="71AB077C-BDF9-4E27-4009-510F7C8BC8C6">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>D0B4370B-A08E-6AC9-825A-863A7A699AA9</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="direccion" id="CDC303C7-A796-FDEC-0BA2-FA9C34CC2AC9">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>38B7CE54-2CBF-95A4-53FD-DE81A420D054</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>130</dataTypeSize>
+<ownDataTypeParameters>130,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="dpi" id="468A42E4-B657-3D6F-A0A7-1C199ECB2F82">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>7CC3E388-6E1E-1E19-BE5D-04E00D603926</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="fecha_registro" id="C0505A97-912C-7455-FAD6-1CCC7A7CA748">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>A08CBA07-1FC7-8AB2-E0C6-EBCA66A80FE7</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="06550801-2B6B-966F-F5FF-4877E207DCE4" name="DOCENTE_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>906B8DAE-49DF-6F6E-CA41-60247ADD5C28</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C2C8DA41-0C31-9482-D346-87F8C574969F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

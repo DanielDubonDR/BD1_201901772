@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C042298F-610A-5166-2B0E-E8F2B02493AF" name="ciclo_anio">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>39278170-476D-D531-56F2-A7041805961A</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_ciclo_anio" id="548B9D4A-732D-B38A-96AB-0B85ADEA09B2">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>1B22ACF3-994D-0C1B-28DD-231FD63E638F</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="anio" id="2EFD676C-5C5B-84F8-DFAA-4D200F19AEF4">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>1D15C63A-B52F-19D8-38C1-8E0F4ED27DF5</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ciclo_id_ciclo" id="3C7C1FF5-FAB6-F3B0-0B90-78C852AFEFEA">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>E3762F8F-EB91-27F0-681D-4354FAE76315</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A0987E39-1C28-1E82-E51F-2199B3709D3B" referredColumn="8D69818E-1FD5-4A53-6D34-2650882FDB5D"/>
+</associations>
+</Column>
+<Column name="CURSO_HABILITADO_id_curso_habilitado" id="13A8C74A-529C-F6EA-8B19-45914DF801DF">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>212E4259-A621-08E5-0268-61E6C64AAFA9</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8752DA15-71E4-8EDC-B1BB-F27013D26E04" referredColumn="8BC6CB42-0331-6FF9-7480-00F12F6E95FA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9BFACB48-038A-4635-4867-C883D3A03D52" name="ciclo_anio_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>AEF54AE1-2EC0-1055-685A-8E4A4E6EA1AC</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="548B9D4A-732D-B38A-96AB-0B85ADEA09B2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5745CF4B-A100-C1C8-9007-BF2BC15500DC" name="ciclo_anio_ciclo_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>B3BF19B9-BB3B-AB2F-B562-C8594C1F1257</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3C7C1FF5-FAB6-F3B0-0B90-78C852AFEFEA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0E8B6FB4-22C1-FE62-5409-DD12A547322B" name="ciclo_anio_CURSO_HABILITADO_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>08F09164-3C6D-7682-F5C0-0A6F39A2D7DE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="13A8C74A-529C-F6EA-8B19-45914DF801DF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_12" directorySegmentName="seg_0" id="C5B6B95C-6C08-D21C-1329-73231D0F4FAE">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 02:33:30 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<sourcePk>7B14B9C7-3E1E-423B-205F-0601B622FA1F</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>2EDEB7D5-6042-5C88-852E-C03958E21A41</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>EEA6377B-C27F-3AD8-EFD1-CE7DD0E75E6D</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -136,13 +136,13 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT015</logicalDatatype>
+<logicalDatatype>LOGDT007</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_carrera" id="06589D5B-69C1-9822-9EE0-0D274ED77789">
+<Attribute name="id_carrera" id="5818A2CE-8931-70E1-FD99-F088755BEFB3">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:36:11 UTC</createdTime>
-<generatorID>493D466B-589B-037A-FF03-304CC7C8C7EE</generatorID>
+<createdTime>2023-10-24 02:33:30 UTC</createdTime>
+<generatorID>C5B6B95C-6C08-D21C-1329-73231D0F4FAE</generatorID>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>

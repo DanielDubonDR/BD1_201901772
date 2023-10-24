@@ -27,32 +27,6 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="ciclo" id="E2CA5EAC-6E06-2DAC-FE8D-3A6ABEDCF612">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:03:21 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>2</dataTypeSize>
-<ownDataTypeParameters>2,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="seccion" id="6C0DAB21-05D4-D799-912E-65C33C1B97F3">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:03:45 UTC</createdTime>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
-<dataTypeSize>1</dataTypeSize>
-<ownDataTypeParameters>1,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="estado" id="3EEAA550-5666-1465-DEB2-D82CDD549E87">
 <createdBy>danie</createdBy>
 <createdTime>2023-10-18 11:13:02 UTC</createdTime>
@@ -77,6 +51,20 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_curso_habilitado" id="E06DBF0E-F9EE-5DED-D9B8-DFDEE8E60FFF">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 02:40:47 UTC</createdTime>
+<generatorID>50EB27B3-0BD1-1C6B-4A87-7CE72386DA31</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<referedAttribute>232E6927-6E9F-E2C1-73F8-151F0BB517E3</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>

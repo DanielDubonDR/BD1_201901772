@@ -65,6 +65,20 @@
 <logicalDatatype>LOGDT015</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="id_curso_habilitado" id="C916FF0F-09E5-106D-E539-CABA17642DDA">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 02:39:18 UTC</createdTime>
+<generatorID>DDDED682-49CF-8491-1971-2D4C874472A1</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<referedAttribute>232E6927-6E9F-E2C1-73F8-151F0BB517E3</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="F8781AB6-DBF6-C7A3-64FF-952D6AC26863" name="ACTA PK">

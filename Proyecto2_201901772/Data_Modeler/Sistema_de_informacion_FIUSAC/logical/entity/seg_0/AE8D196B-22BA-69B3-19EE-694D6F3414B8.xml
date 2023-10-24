@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="4CBB00ED-300B-2884-C003-1211749E6A3A" name="NOTA">
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AE8D196B-22BA-69B3-19EE-694D6F3414B8" name="ciclo">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:22:42 UTC</createdTime>
+<createdTime>2023-10-24 02:41:05 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
@@ -15,9 +15,9 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id_nota" id="CD8812ED-83D0-73D0-6F66-ECF3C5FA0E75">
+<Attribute name="id_ciclo" id="D6905839-2ED6-25D3-6455-F5FBF83F9259">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:22:47 UTC</createdTime>
+<createdTime>2023-10-24 02:41:15 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
@@ -27,44 +27,31 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="nota" id="56D70A4C-A18E-8A68-CC01-93ADBB3C6CBA">
+<Attribute name="ciclo" id="D4832569-40AC-36EC-C392-5A50717DDEB8">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:24:40 UTC</createdTime>
+<createdTime>2023-10-24 02:41:36 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="id_asignacion" id="76BF933E-903E-61C0-D290-50CC57868162">
-<createdBy>danie</createdBy>
-<createdTime>2023-10-24 03:04:16 UTC</createdTime>
-<generatorID>633E9AA6-E42E-32FA-792B-E3B37846799A</generatorID>
-<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
-<engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
-</engineerTo>
-<referedAttribute>351A5151-D7F9-D8A3-440C-57F9DC45C2A9</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2</dataTypeSize>
+<ownDataTypeParameters>2,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="F6CAE34C-59FB-BD9D-4B74-25595BBE1216" name="NOTA PK">
+<identifier id="C88B67C2-634B-BF2C-E588-E438E9E8BCC6" name="ciclo PK">
 <createdBy>danie</createdBy>
-<createdTime>2023-10-18 11:23:04 UTC</createdTime>
+<createdTime>2023-10-24 02:41:27 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <engineerTo>
 <item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>CD8812ED-83D0-73D0-6F66-ECF3C5FA0E75</attributeRef>
+<attributeRef>D6905839-2ED6-25D3-6455-F5FBF83F9259</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

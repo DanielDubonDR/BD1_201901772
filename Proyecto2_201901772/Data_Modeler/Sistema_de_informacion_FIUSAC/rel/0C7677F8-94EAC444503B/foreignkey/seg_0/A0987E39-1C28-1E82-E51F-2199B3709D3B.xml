@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A0987E39-1C28-1E82-E51F-2199B3709D3B" containerWithKeyObject="C042298F-610A-5166-2B0E-E8F2B02493AF" localFKIndex="5745CF4B-A100-C1C8-9007-BF2BC15500DC" name="ciclo_anio_ciclo_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>B3BF19B9-BB3B-AB2F-B562-C8594C1F1257</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<referredTableLongName>ciclo</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>5E8761AE-2618-1FBE-308E-663C189B104D</referredTableID>
+<keyObject>E2215445-FE51-FC5D-BE2C-8A081F014EF1</keyObject>
+<referredKeyID>E2215445-FE51-FC5D-BE2C-8A081F014EF1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_ciclo</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3BA5EA4E-D0FB-4E4F-0567-D70AC358F00E" name="ASIGNACION_CURSO">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>7F354238-3FAD-69E3-2F0C-2C5C8F32B66A</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_asignacion" id="3777F638-7570-64F1-AEA3-6A04D2E40135">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>351A5151-D7F9-D8A3-440C-57F9DC45C2A9</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="estado" id="BAAF439E-9AD2-D46D-C837-E181F81AB794">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>3EEAA550-5666-1465-DEB2-D82CDD549E87</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT042</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTUDIANTE_carnet" id="786B1366-36BC-0DAA-1404-F0A465A6104E">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>A5C30C7A-4EB8-BE2A-F855-3B196B09F10F</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AACAF386-73B9-6B76-19AD-2F9B464250A2" referredColumn="E212552F-CDB8-FD6B-D4BE-E81E9DC68077"/>
+</associations>
+</Column>
+<Column name="CURSO_HABILITADO_id_curso_habilitado" id="1874D3F7-927B-3224-1CD7-7FD36ACF16F1">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>E06DBF0E-F9EE-5DED-D9B8-DFDEE8E60FFF</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="12F13F4B-EE04-771C-0A76-9351FACF6CAA" referredColumn="8BC6CB42-0331-6FF9-7480-00F12F6E95FA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="81F2E24C-25F6-DAC1-E39C-01B33E2CFD27" name="ASIGNACION_CURSO_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>36D47735-F4E2-E563-BC88-D6B6D80A05EE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3777F638-7570-64F1-AEA3-6A04D2E40135"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="212B51AA-8B7C-97A5-4DCA-1D925183BE83" name="ASIGNACION_CURSO_CURSO_HABILITADO_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>50EB27B3-0BD1-1C6B-4A87-7CE72386DA31</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1874D3F7-927B-3224-1CD7-7FD36ACF16F1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="60A3E97C-A80F-011F-6A57-CBB7DE28FA03" name="ASIGNACION_CURSO_ESTUDIANTE_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>50084857-6E38-0460-3095-84AA895536CF</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="786B1366-36BC-0DAA-1404-F0A465A6104E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

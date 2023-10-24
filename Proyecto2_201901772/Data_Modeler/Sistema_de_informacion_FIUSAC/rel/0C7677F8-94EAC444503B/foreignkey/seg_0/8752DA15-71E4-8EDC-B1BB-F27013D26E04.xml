@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="8752DA15-71E4-8EDC-B1BB-F27013D26E04" containerWithKeyObject="C042298F-610A-5166-2B0E-E8F2B02493AF" localFKIndex="0E8B6FB4-22C1-FE62-5409-DD12A547322B" name="ciclo_anio_CURSO_HABILITADO_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-24 03:25:33 UTC</createdTime>
+<generatorID>08F09164-3C6D-7682-F5C0-0A6F39A2D7DE</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<referredTableLongName>CURSO_HABILITADO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3B7D7EA1-C323-4EB1-282A-BDE29CBD8071</referredTableID>
+<keyObject>EB1E3D26-78B6-F016-F686-550D27CD8126</keyObject>
+<referredKeyID>EB1E3D26-78B6-F016-F686-550D27CD8126</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_curso_habilitado</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
