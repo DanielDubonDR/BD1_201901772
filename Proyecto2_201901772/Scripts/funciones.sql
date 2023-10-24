@@ -623,4 +623,236 @@ END;
 $$
 DELIMITER ;
 
-select verificarTraslapeHorario(1, 1, '08:00-9:00');
+# -------------------------------------------- verificarCursoAsignadoMismaSeccion --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCursoAsignadoMismaSeccion;
+DELIMITER $$
+CREATE FUNCTION verificarCursoAsignadoMismaSeccion(carne BIGINT, codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCursoHabilitado INT;
+    DECLARE idCicloAnio INT;
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN resultado;
+    END IF;
+
+    SELECT id_curso_habilitado INTO idCursoHabilitado
+    FROM CURSO_HABILITADO
+    WHERE id_ciclo_anio = idCicloAnio
+    AND codigo_curso = codigoCurso
+    AND seccion = secc;
+
+    IF idCursoHabilitado IS NULL THEN
+        RETURN resultado;
+    END IF;
+
+    IF EXISTS(SELECT * FROM ASIGNACION_CURSO WHERE carnet = carne AND id_curso_habilitado = idCursoHabilitado AND estado = TRUE) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCursoAsignadoDiferencteSeccion --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCursoAsignadoDiferenteSeccion;
+DELIMITER $$
+CREATE FUNCTION verificarCursoAsignadoDiferenteSeccion(carne BIGINT, codigoCurso BIGINT, ciclo VARCHAR(2))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCicloAnio INT;
+    DECLARE resultado BOOLEAN;
+
+    -- Declara una tabla temporal para almacenar múltiples idCursoHabilitado
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmpIdCursoHabilitado (id INT);
+
+    SET resultado = FALSE;
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN resultado;
+    END IF;
+
+    -- Borra los registros existentes en la tabla temporal
+    DELETE FROM tmpIdCursoHabilitado;
+
+    -- Inserta los valores de idCursoHabilitado en la tabla temporal
+    INSERT INTO tmpIdCursoHabilitado (id)
+    SELECT id_curso_habilitado
+    FROM CURSO_HABILITADO
+    WHERE id_ciclo_anio = idCicloAnio
+    AND codigo_curso = codigoCurso;
+
+    IF (SELECT COUNT(*) FROM tmpIdCursoHabilitado) > 0 THEN
+        -- Si hay registros en la tabla temporal, verifica la existencia en ASIGNACION_CURSO
+        IF EXISTS(SELECT * FROM ASIGNACION_CURSO WHERE carnet = carne AND id_curso_habilitado IN (SELECT id FROM tmpIdCursoHabilitado) AND estado = TRUE) THEN
+            SET resultado = TRUE;
+        END IF;
+    END IF;
+
+    -- Borra la tabla temporal
+    DROP TEMPORARY TABLE IF EXISTS tmpIdCursoHabilitado;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCursoDesasignado --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCursoDesasignado;
+DELIMITER $$
+CREATE FUNCTION verificarCursoDesasignado(carne BIGINT, codigoCurso BIGINT, ciclo VARCHAR(2))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCicloAnio INT;
+    DECLARE resultado BOOLEAN;
+
+    CREATE TEMPORARY TABLE IF NOT EXISTS tmpIdCursoHabilitado (id INT);
+
+    SET resultado = FALSE;
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN resultado;
+    END IF;
+
+    DELETE FROM tmpIdCursoHabilitado;
+
+    INSERT INTO tmpIdCursoHabilitado (id)
+    SELECT id_curso_habilitado
+    FROM CURSO_HABILITADO
+    WHERE id_ciclo_anio = idCicloAnio
+    AND codigo_curso = codigoCurso;
+
+    IF (SELECT COUNT(*) FROM tmpIdCursoHabilitado) > 0 THEN
+        IF EXISTS(SELECT * FROM ASIGNACION_CURSO WHERE carnet = carne AND id_curso_habilitado IN (SELECT id FROM tmpIdCursoHabilitado) AND estado = FALSE) THEN
+            SET resultado = TRUE;
+        END IF;
+    END IF;
+
+    DROP TEMPORARY TABLE IF EXISTS tmpIdCursoHabilitado;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCreditosEsutidanteCurso --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCreditosEstudianteCurso;
+DELIMITER $$
+CREATE FUNCTION verificarCreditosEstudianteCurso(carne BIGINT, codigoCurso BIGINT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE creditosCurso INT;
+    DECLARE creditosEstudiante INT;
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+    SET creditosCurso = (SELECT creditos_necesarios FROM CURSO WHERE codigo_curso = codigoCurso);
+    SET creditosEstudiante = (SELECT creditos FROM ESTUDIANTE WHERE carnet = carne);
+
+    IF creditosEstudiante >= creditosCurso THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCursoCarrera --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCursoCarrera;
+DELIMITER $$
+CREATE FUNCTION verificarCursoCarrera(carne BIGINT, codigoCurso BIGINT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCarreraEstudiante INT;
+    DECLARE idCarreraCurso INT;
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+    SET idCarreraEstudiante = (SELECT id_carrera FROM ESTUDIANTE WHERE carnet = carne);
+    SET idCarreraCurso = (SELECT id_carrera FROM CURSO WHERE codigo_curso = codigoCurso);
+
+    IF idCarreraEstudiante = idCarreraCurso THEN
+        SET resultado = TRUE;
+    ELSEIF idCarreraCurso = 0 THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCupoCurso --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCupoCurso;
+DELIMITER $$
+CREATE FUNCTION verificarCupoCurso(codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCicloAnio INT;
+    DECLARE idCursoHabilitado INT;
+    DECLARE cupoCurso INT;
+    DECLARE cupoActual INT;
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN resultado;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT id_curso_habilitado FROM CURSO_HABILITADO WHERE id_ciclo_anio = idCicloAnio AND codigo_curso = codigoCurso AND seccion = secc);
+    SET cupoCurso = (SELECT cupo_maximo FROM CURSO_HABILITADO WHERE id_curso_habilitado = idCursoHabilitado);
+    SET cupoActual = (SELECT COUNT(*) FROM ASIGNACION_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND estado = TRUE);
+
+    IF cupoActual < cupoCurso THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- getCursoHabilitado --------------------------------------------
+DROP FUNCTION IF EXISTS getIdCursoHabilitado;
+DELIMITER $$
+CREATE FUNCTION getIdCursoHabilitado(codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE idCicloAnio INT;
+    DECLARE idCursoHabilitado INT;
+
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN -1;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT id_curso_habilitado FROM CURSO_HABILITADO WHERE id_ciclo_anio = idCicloAnio AND codigo_curso = codigoCurso AND seccion = secc);
+
+    RETURN idCursoHabilitado;
+
+END;
+$$
+DELIMITER ;
+
+select getIdCursoHabilitado(281, '1S', 'D');
+
+select verificarCupoCurso(281, '1S', 'D');
+
+select verificarCursoCarrera(201901772, 281);
+select verificarCreditosEstudianteCurso(201901772, 281);
+
+SELECT COUNT(*) FROM ASIGNACION_CURSO WHERE id_curso_habilitado = 1 AND estado = TRUE;
+SELECT cupo_maximo FROM CURSO_HABILITADO WHERE id_curso_habilitado = 1;
