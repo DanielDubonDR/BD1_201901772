@@ -506,3 +506,121 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+# -------------------------------------------- validarDia --------------------------------------------
+DROP FUNCTION IF EXISTS validarDia;
+DELIMITER $$
+CREATE FUNCTION validarDia(dia INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    IF dia >= 1 AND dia <= 7 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarHorario --------------------------------------------
+DROP FUNCTION IF EXISTS validarHorario;
+DELIMITER $$
+CREATE FUNCTION validarHorario(horario VARCHAR(11))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE startTime VARCHAR(5);
+    DECLARE endTime VARCHAR(5);
+    DECLARE horaInicio VARCHAR(2);
+    DECLARE horaFin VARCHAR(2);
+
+    SET startTime = SUBSTRING_INDEX(horario, '-', 1);
+    SET endTime = SUBSTRING_INDEX(horario, '-', -1);
+
+    IF horario REGEXP '^[0-2][0-9]:[0-9]{2}-[0-2][0-9]:[0-9]{2}$' THEN
+
+        SET horaInicio = SUBSTRING_INDEX(startTime, ':', 1);
+        SET horaFin = SUBSTRING_INDEX(endTime, ':', 1);
+
+        IF TIME_FORMAT(startTime, '%H:%i') IS NOT NULL
+        AND TIME_FORMAT(endTime, '%H:%i') IS NOT NULL
+        AND TIME_FORMAT(startTime, '%H:%i') < TIME_FORMAT(endTime, '%H:%i')
+        AND CAST(horaInicio AS UNSIGNED) < 24
+        AND CAST(horaFin AS UNSIGNED) < 24 THEN
+            RETURN TRUE;
+        ELSE
+            RETURN FALSE;
+        END IF;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarCursoHabilitado --------------------------------------------
+DROP FUNCTION IF EXISTS verificarCursoHabilitado;
+DELIMITER $$
+CREATE FUNCTION verificarCursoHabilitado(idCursoHabilitado INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF EXISTS(SELECT * FROM CURSO_HABILITADO WHERE id_curso_habilitado = idCursoHabilitado) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarMismoHoraio --------------------------------------------
+DROP FUNCTION IF EXISTS verificarMismoHoraio;
+DELIMITER $$
+CREATE FUNCTION verificarMismoHoraio(idCursoHabilitado INT, dia INT, horario VARCHAR(11))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    DECLARE startTime VARCHAR(5);
+    DECLARE endTime VARCHAR(5);
+
+    SET resultado = FALSE;
+    SET startTime = SUBSTRING_INDEX(horario, '-', 1);
+    SET endTime = SUBSTRING_INDEX(horario, '-', -1);
+
+    IF EXISTS(SELECT * FROM HORARIO_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND dia_semana = dia AND hora_inicio = startTime AND hora_final = endTime) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarTraslapeHorario --------------------------------------------
+DROP FUNCTION IF EXISTS verificarTraslapeHorario;
+DELIMITER $$
+CREATE FUNCTION verificarTraslapeHorario(idCursoHabilitado INT, dia INT, horario VARCHAR(11))
+RETURNS BOOLEAN DETERMINISTIC
+    BEGIN
+    DECLARE resultado BOOLEAN;
+    DECLARE startTime VARCHAR(5);
+    DECLARE endTime VARCHAR(5);
+
+    SET resultado = 0;
+    SET startTime = SUBSTRING_INDEX(horario, '-', 1);
+    SET endTime = SUBSTRING_INDEX(horario, '-', -1);
+
+    IF EXISTS(SELECT * FROM HORARIO_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND dia_semana = dia AND hora_inicio <= startTime AND hora_final > startTime) THEN
+        SET resultado = TRUE;
+    ELSEIF EXISTS(SELECT * FROM HORARIO_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND dia_semana = dia AND hora_inicio < endTime AND hora_final >= endTime) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+select verificarTraslapeHorario(1, 1, '08:00-9:00');

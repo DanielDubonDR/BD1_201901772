@@ -299,3 +299,52 @@ procHabilitarCurso:BEGIN
 END;
 $$
 DELIMITER ;
+
+# ------------------------------------------ agregarHorario ------------------------------------------
+DROP PROCEDURE IF EXISTS agregarHorario;
+DELIMITER $$
+CREATE PROCEDURE agregarHorario(
+    IN idCursoHabilitado INT,
+    IN dia INT,
+    IN horario VARCHAR(11)
+)
+procAgregarHorario:BEGIN
+
+    DECLARE horaInicio VARCHAR(5);
+    DECLARE horaFinal VARCHAR(5);
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarNumero(idCursoHabilitado) = FALSE THEN
+        CALL errMessage('El id_curso_habilitado debe ser un número entero positivo');
+        LEAVE procAgregarHorario;
+    ELSEIF validarDia(dia) = FALSE THEN
+        CALL errMessage('El día debe ser un número entero entre 1 y 7');
+        LEAVE procAgregarHorario;
+    ELSEIF validarHorario(HORARIO) = FALSE THEN
+        CALL errMessage('El horario debe ser de tipo texto con el formato HH:MM-HH:MM teniendo una diferencia horaria, el campo no puede estar vacío');
+        LEAVE procAgregarHorario;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCursoHabilitado(idCursoHabilitado) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al id ingresado');
+        LEAVE procAgregarHorario;
+    ELSEIF verificarMismoHoraio(idCursoHabilitado, dia, horario) = TRUE THEN
+        CALL errMessage('El curso habilitado ya tiene un horario asociado al día y horario ingresado');
+        LEAVE procAgregarHorario;
+    ELSEIF verificarTraslapeHorario(idCursoHabilitado, dia, horario) = TRUE THEN
+        CALL errMessage('El horario que ingresó posee un traslape con un horario similar en el mismo dia');
+        LEAVE procAgregarHorario;
+    END IF;
+
+    SET horaInicio = SUBSTRING_INDEX(horario, '-', 1);
+    SET horaFinal = SUBSTRING_INDEX(horario, '-', -1);
+
+    INSERT INTO HORARIO_CURSO (dia_semana, hora_inicio, hora_final, id_curso_habilitado)
+    VALUES (dia, horaInicio, horaFinal, idCursoHabilitado);
+
+    CALL message(CONCAT('Horario ', horario, ' agregado al curso habilitado id: ', idCursoHabilitado ,' exitosamente'));
+
+END;
+$$
+DELIMITER ;

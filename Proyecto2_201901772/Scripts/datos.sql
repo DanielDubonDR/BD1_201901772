@@ -1,9 +1,9 @@
 #-------------------------------------------------- CARRERA ----------------------------------------
-call crearCarrera('Area Común');
-call crearCarrera('Ingeniería en Ciencias y Sistemas');
+CALL crearCarrera('Area Común');
+CALL crearCarrera('Ingeniería en Ciencias y Sistemas');
 
 #-------------------------------------------------- ESTUDIANTE ----------------------------------------
-call registrarEstudiante(
+CALL registrarEstudiante(
     201901772,
     'Daniel Reginaldo',
     'Dubón Rodríguez',
@@ -15,7 +15,7 @@ call registrarEstudiante(
     1
 );
 
-call registrarEstudiante(
+CALL registrarEstudiante(
     201901773,
     'Daniel Reginaldo',
     'Dubón Rodríguez',
@@ -28,7 +28,7 @@ call registrarEstudiante(
 );
 
 # -------------------------------------------------- DOCENTE ----------------------------------------
-call registrarDocente(
+CALL registrarDocente(
     'Luis Fernando',
     'Espino',
     '01-01-1980',
@@ -39,7 +39,7 @@ call registrarDocente(
     123456789
 );
 
-call registrarDocente(
+CALL registrarDocente(
     'Pedro Pablo',
     'Hernandez',
     '01-01-1970',
@@ -51,7 +51,7 @@ call registrarDocente(
 );
 
 # -------------------------------------------------- CURSO ----------------------------------------
-call crearCurso(
+CALL crearCurso(
     0281,
     'Sistemas Operativos 1',
     0,
@@ -60,7 +60,7 @@ call crearCurso(
     true
 );
 
-call crearCurso(
+CALL crearCurso(
     0282,
     'Sistemas Operativos 2',
     0,
@@ -70,10 +70,17 @@ call crearCurso(
 );
 
 # -------------------------------------------------- HABILITAR CURSO ----------------------------------------
-call habilitarCurso(
+CALL habilitarCurso(
     0281,
     '2S',
     123456789,
     20,
     'A'
+);
+
+# -------------------------------------------------- AGREGAR HORARIO ----------------------------------------
+CALL agregarHorario(
+    2,
+    2,
+    '07:00-10:00'
 );
