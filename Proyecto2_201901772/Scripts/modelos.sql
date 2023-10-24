@@ -66,20 +66,37 @@ CREATE TABLE CURSO (
     FOREIGN KEY (id_carrera) REFERENCES CARRERA(id_carrera)
 );
 
+# ----------------------------------------------------- CICLO --------------------------------------------------------
+DROP TABLE IF EXISTS CICLO;
+CREATE TABLE CICLO (
+    id_ciclo INT NOT NULL AUTO_INCREMENT,
+    ciclo VARCHAR(2) NOT NULL,
+    PRIMARY KEY (id_ciclo)
+);
+
+# ----------------------------------------------------- CICLO_ANIO ---------------------------------------------------
+DROP TABLE IF EXISTS CICLO_ANIO;
+CREATE TABLE CICLO_ANIO (
+    id_ciclo_anio INT NOT NULL AUTO_INCREMENT,
+    anio YEAR NOT NULL,
+    id_ciclo INT NOT NULL,
+    PRIMARY KEY (id_ciclo_anio),
+    FOREIGN KEY (id_ciclo) REFERENCES CICLO(id_ciclo)
+);
+
 # ------------------------------------------------------ CURSO_HABILITADO --------------------------------------------
 DROP TABLE IF EXISTS CURSO_HABILITADO;
 CREATE TABLE CURSO_HABILITADO (
     id_curso_habilitado INT NOT NULL AUTO_INCREMENT,
-    ciclo VARCHAR(2) NOT NULL,
+    id_ciclo_anio INT NOT NULL,
     cupo_maximo INT NOT NULL,
     seccion CHAR(1) NOT NULL,
-    anio YEAR NOT NULL,
-    estudiantes_asignados INT NOT NULL DEFAULT 0,
     codigo_curso BIGINT NOT NULL,
     siff_docente BIGINT NOT NULL,
     PRIMARY KEY (id_curso_habilitado),
     FOREIGN KEY (codigo_curso) REFERENCES CURSO(codigo_curso),
-    FOREIGN KEY (siff_docente) REFERENCES DOCENTE(siff_docente)
+    FOREIGN KEY (siff_docente) REFERENCES DOCENTE(siff_docente),
+    FOREIGN KEY (id_ciclo_anio) REFERENCES CICLO_ANIO(id_ciclo_anio)
 );
 
 # ------------------------------------------------------ HORARIO_CURSO -----------------------------------------------
@@ -98,40 +115,36 @@ CREATE TABLE HORARIO_CURSO (
 DROP TABLE IF EXISTS ASIGNACION_CURSO;
 CREATE TABLE ASIGNACION_CURSO (
     id_asignacion INT NOT NULL AUTO_INCREMENT,
-    ciclo VARCHAR(2) NOT NULL,
-    seccion CHAR(1) NOT NULL,
-    anio YEAR NOT NULL,
     estado TINYINT NOT NULL DEFAULT 1,
     carnet BIGINT NOT NULL,
-    codigo_curso BIGINT NOT NULL,
+    id_curso_habilitado INT NOT NULL,
     PRIMARY KEY (id_asignacion),
     FOREIGN KEY (carnet) REFERENCES ESTUDIANTE(carnet),
-    FOREIGN KEY (codigo_curso) REFERENCES CURSO_HABILITADO(codigo_curso)
+    FOREIGN KEY (id_curso_habilitado) REFERENCES CURSO_HABILITADO(id_curso_habilitado)
 );
 
 # ------------------------------------------------------ NOTA --------------------------------------------------------
 DROP TABLE IF EXISTS NOTA;
 CREATE TABLE NOTA (
     id_nota INT NOT NULL AUTO_INCREMENT,
-    ciclo VARCHAR(2) NOT NULL,
-    seccion CHAR(1) NOT NULL,
-    anio YEAR NOT NULL,
-    nota INT NOT NULL DEFAULT 0,
-    carnet BIGINT NOT NULL,
-    codigo_curso BIGINT NOT NULL,
+    nota INT NOT NULL,
+    id_asignacion INT NOT NULL,
     PRIMARY KEY (id_nota),
-    FOREIGN KEY (carnet) REFERENCES ASIGNACION_CURSO(carnet),
-    FOREIGN KEY (codigo_curso) REFERENCES ASIGNACION_CURSO(codigo_curso)
+    FOREIGN KEY (id_asignacion) REFERENCES ASIGNACION_CURSO(id_asignacion)
 );
 
 # ------------------------------------------------------ ACTA --------------------------------------------------------
 DROP TABLE IF EXISTS ACTA;
 CREATE TABLE ACTA (
     id_acta INT NOT NULL AUTO_INCREMENT,
-    ciclo VARCHAR(2) NOT NULL,
-    seccion CHAR(1) NOT NULL,
     fecha_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    codigo_curso BIGINT NOT NULL,
+    id_curso_habilitado INT NOT NULL,
     PRIMARY KEY (id_acta),
-    FOREIGN KEY (codigo_curso) REFERENCES CURSO_HABILITADO(codigo_curso)
+    FOREIGN KEY (id_curso_habilitado) REFERENCES CURSO_HABILITADO(id_curso_habilitado)
 );
+
+# ------------------------------------------------------ CARGAR_CICLOS -----------------------------------------------
+INSERT INTO CICLO (ciclo) VALUES ('1S');
+INSERT INTO CICLO (ciclo) VALUES ('2S');
+INSERT INTO CICLO (ciclo) VALUES ('VJ');
+INSERT INTO CICLO (ciclo) VALUES ('VD');

@@ -139,7 +139,7 @@ CREATE PROCEDURE registrarDocente(
     IN telefono INT,
     IN direccion VARCHAR(150),
     IN dpi BIGINT,
-    IN siff BIGINT
+    IN siff_docente BIGINT
 )
 procRegistrarDocente:BEGIN
 
@@ -167,7 +167,7 @@ procRegistrarDocente:BEGIN
     ELSEIF validarDPI(dpi) = FALSE THEN
         CALL errMessage('El DPI debe ser de tipo numérico de 13 dígitos y no puede estar vacío');
         LEAVE procRegistrarDocente;
-    ELSEIF validarSIFF(siff) = FALSE THEN
+    ELSEIF validarSIFF(siff_docente) = FALSE THEN
         CALL errMessage('El SIFF debe ser de tipo numérico y no puede estar vacío');
         LEAVE procRegistrarDocente;
     END IF;
@@ -176,7 +176,7 @@ procRegistrarDocente:BEGIN
     IF verificarDPIDocente(dpi) = TRUE THEN
         CALL errMessage('Ya existe un docente asociado a ese DPI');
         LEAVE procRegistrarDocente;
-    ELSEIF verificarSIFF(siff) = TRUE THEN
+    ELSEIF verificarSIFF(siff_docente) = TRUE THEN
         CALL errMessage('Ya existe un docente asociado a ese SIFF');
         LEAVE procRegistrarDocente;
     END IF;
@@ -184,9 +184,9 @@ procRegistrarDocente:BEGIN
     SET fnac = STR_TO_DATE(fecha_nac, '%d-%m-%Y');
 
     INSERT INTO DOCENTE (nombre, apellido, fecha_nac, correo, telefono, direccion, dpi, siff_docente, fecha_ingreso)
-    VALUES (nombre, apellido, fnac, correo, telefono, direccion, dpi, siff, CURDATE());
+    VALUES (nombre, apellido, fnac, correo, telefono, direccion, dpi, siff_docente, CURDATE());
 
-    CALL message(CONCAT('Docente ', siff, ' ', nombre, ' registrado exitosamente'));
+    CALL message(CONCAT('Docente ', siff_docente, ' ', nombre, ' registrado exitosamente'));
 
 END;
 $$
@@ -239,6 +239,62 @@ procCrearCurso:BEGIN
     VALUES (codigo_curso, nombre, creditos_necesarios, creditos_otorga, idCarrera, obligatorio);
 
     CALL message(CONCAT('Curso ', codigo_curso, ': ', nombre, ' registrado exitosamente'));
+
+END;
+$$
+DELIMITER ;
+
+# ----------------------------------------------- habilitarCurso -----------------------------------------------
+DROP PROCEDURE IF EXISTS habilitarCurso;
+DELIMITER $$
+CREATE PROCEDURE habilitarCurso(
+    IN codigo_curso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN siff_docente BIGINT,
+    IN cupo_maximo INT,
+    IN seccion CHAR(1)
+)
+procHabilitarCurso:BEGIN
+
+    DECLARE idCicloCurso INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procHabilitarCurso;
+    ELSEIF validarSIFF(siff_docente) = FALSE THEN
+        CALL errMessage('El siff_docente debe ser de tipo numérico y no puede estar vacío');
+        LEAVE procHabilitarCurso;
+    ELSEIF validarNumero(cupo_maximo) = FALSE THEN
+        CALL errMessage('El cupo máximo debe ser un número entero positivo');
+        LEAVE procHabilitarCurso;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procHabilitarCurso;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigo_curso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procHabilitarCurso;
+    ELSEIF verificarSIFF(siff_docente) = FALSE THEN
+        CALL errMessage('No existe un docente asociado al SIFF ingresado');
+        LEAVE procHabilitarCurso;
+    ELSEIF verificarSeccion(codigo_curso, ciclo, seccion) = TRUE THEN
+        CALL errMessage('Ya existe un curso asociado a la sección ingresada');
+        LEAVE procHabilitarCurso;
+    END IF;
+
+    SET idCicloCurso = (SELECT getIdCicloAnio(ciclo));
+    IF idCicloCurso IS NULL OR idCicloCurso = -1 THEN
+        CALL errMessage('No existe un ciclo asociado al ciclo ingresado');
+        LEAVE procHabilitarCurso;
+    END IF;
+
+    INSERT INTO CURSO_HABILITADO (id_ciclo_anio, cupo_maximo, seccion, siff_docente, codigo_curso)
+    VALUES (idCicloCurso, cupo_maximo, seccion, siff_docente, codigo_curso);
+
+    CALL message(CONCAT('Curso ', codigo_curso, ' sección ', seccion, ' habilitado exitosamente'));
 
 END;
 $$

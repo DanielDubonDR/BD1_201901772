@@ -133,7 +133,7 @@ RETURNS BOOLEAN DETERMINISTIC
 BEGIN
     DECLARE resultado BOOLEAN;
     SET resultado = FALSE;
-    IF telefono REGEXP '^[0-9]{8,}$' THEN
+    IF telefono REGEXP '^[0-9]{8}$' THEN
         SET resultado = TRUE;
     ELSE
         SET resultado = FALSE;
@@ -398,6 +398,111 @@ BEGIN
     END IF;
 
     RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- getIdCicloAnio --------------------------------------------
+DROP FUNCTION IF EXISTS getIdCicloAnio;
+DELIMITER $$
+CREATE FUNCTION getIdCicloAnio(cl VARCHAR(2))
+RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE idCiclo INT;
+    DECLARE idCicloAnio INT;
+    DECLARE resultado INT;
+    SET resultado = -1;
+
+    SELECT id_ciclo INTO idCiclo FROM CICLO WHERE ciclo = cl;
+    IF idCiclo IS NULL THEN
+        RETURN resultado;
+    END IF;
+
+    SELECT id_ciclo_anio INTO idCicloAnio FROM CICLO_ANIO WHERE id_ciclo = idCiclo AND anio = YEAR(CURDATE());
+    IF idCicloAnio IS NULL THEN
+        INSERT INTO CICLO_ANIO(id_ciclo, anio) VALUES(idCiclo, YEAR(CURDATE()));
+        SET resultado = LAST_INSERT_ID();
+        RETURN resultado;
+    ELSE
+        RETURN idCicloAnio;
+    END IF;
+
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarCiclo --------------------------------------------
+DROP FUNCTION IF EXISTS validarCiclo;
+DELIMITER $$
+CREATE FUNCTION validarCiclo(ciclo VARCHAR(2))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    RETURN IF
+    (BINARY ciclo = '1S'
+    OR BINARY ciclo= '2S'
+    OR BINARY ciclo= 'VD'
+    OR BINARY ciclo= 'VJ', TRUE, FALSE);
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- validarSeccion --------------------------------------------
+DROP FUNCTION IF EXISTS validarSeccion;
+DELIMITER $$
+CREATE FUNCTION validarSeccion(seccion CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    RETURN IF
+    (BINARY seccion = 'A'
+    OR BINARY seccion= 'B'
+    OR BINARY seccion= 'C'
+    OR BINARY seccion= 'D'
+    OR BINARY seccion= 'E'
+    OR BINARY seccion= 'F'
+    OR BINARY seccion= 'G'
+    OR BINARY seccion= 'H'
+    OR BINARY seccion= 'I'
+    OR BINARY seccion= 'J'
+    OR BINARY seccion= 'K'
+    OR BINARY seccion= 'L'
+    OR BINARY seccion= 'M'
+    OR BINARY seccion= 'N'
+    OR BINARY seccion= 'O'
+    OR BINARY seccion= 'P'
+    OR BINARY seccion= 'Q'
+    OR BINARY seccion= 'R'
+    OR BINARY seccion= 'S'
+    OR BINARY seccion= 'T'
+    OR BINARY seccion= 'U'
+    OR BINARY seccion= 'V'
+    OR BINARY seccion= 'W'
+    OR BINARY seccion= 'X'
+    OR BINARY seccion= 'Y'
+    OR BINARY seccion= 'Z', TRUE, FALSE);
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- verificarSeccion --------------------------------------------
+DROP FUNCTION IF EXISTS verificarSeccion;
+DELIMITER $$
+CREATE FUNCTION verificarSeccion(codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idHabilitado INT;
+
+    SELECT id_curso_habilitado INTO idHabilitado
+    FROM CURSO_HABILITADO
+    WHERE id_ciclo_anio = getIdCicloAnio(ciclo)
+    AND codigo_curso = codigoCurso
+    AND seccion = secc;
+
+    IF idHabilitado IS NULL THEN
+        RETURN FALSE;
+    ELSE
+        RETURN TRUE;
+    END IF;
+
 END;
 $$
 DELIMITER ;
