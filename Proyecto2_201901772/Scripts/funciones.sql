@@ -1023,6 +1023,58 @@ END;
 $$
 DELIMITER ;
 
-select verificarEstudianteConNota(201901774, 0281, '1S', 'A');
+# ------------------------------------------------- validarAnio -------------------------------------------------
+DROP FUNCTION IF EXISTS validarAnio;
+DELIMITER $$
+CREATE FUNCTION validarAnio(anio INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
 
-select verificarNotasIngresadas(0281, '1S', 'A');
+    IF anio >= 1800 AND anio <= 2050 THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------------- verificarCicloAnio -------------------------------------------------
+DROP FUNCTION IF EXISTS verificarCicloAnio;
+DELIMITER $$
+CREATE FUNCTION verificarCicloAnio(ciclo VARCHAR(2),anio INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+
+    IF EXISTS(SELECT * FROM CICLO_ANIO ca INNER JOIN CICLO c ON ca.id_ciclo = c.id_ciclo WHERE c.ciclo = ciclo AND ca.anio = anio) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------------- getCicloAnioPersonalizado -------------------------------------------------
+DROP FUNCTION IF EXISTS getCicloAnioPersonalizado;
+DELIMITER $$
+CREATE FUNCTION getCicloAnioPersonalizado(ciclo VARCHAR(2),anio INT)
+RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE resultado INT;
+    SET resultado = -1;
+
+    IF EXISTS(SELECT * FROM CICLO_ANIO ca INNER JOIN CICLO c ON ca.id_ciclo = c.id_ciclo WHERE c.ciclo = ciclo AND ca.anio = anio) THEN
+        SET resultado = (SELECT id_ciclo_anio FROM CICLO_ANIO ca INNER JOIN CICLO c ON ca.id_ciclo = c.id_ciclo WHERE c.ciclo = ciclo AND ca.anio = anio);
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+select getCicloAnioPersonalizado('1S',2021);

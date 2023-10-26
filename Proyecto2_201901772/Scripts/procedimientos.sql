@@ -660,3 +660,165 @@ procGenerarActa:BEGIN
 END;
 $$
 DELIMITER ;
+
+# ------------------------------------------ REPORTES -------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
+
+# ------------------------------------------ consultarPensum ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarPensum;
+DELIMITER $$
+CREATE PROCEDURE consultarPensum(
+    IN idCarrera INT
+)
+procConsultarPensum:BEGIN
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarNumero(idCarrera) = FALSE THEN
+        CALL errMessage('El id de la carrera debe ser un número entero positivo');
+        LEAVE procConsultarPensum;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCarrera(idCarrera) = FALSE THEN
+        CALL errMessage('No existe una carrera asociada al id ingresado');
+        LEAVE procConsultarPensum;
+    END IF;
+
+    SELECT
+        codigo_curso AS 'Código del curso',
+        nombre AS 'Nombre del curso',
+        IF(obligatorio = 1, 'Sí', 'No') AS 'Es obligatorio',
+        creditos_necesarios AS 'Créditos necesarios',
+        IF(id_carrera != 0, 'Profesional', 'Área común') AS 'Área'
+    FROM CURSO
+    WHERE id_carrera IN (0, idCarrera)
+    ORDER BY codigo_curso;
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ consultarEstudiante ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarEstudiante;
+DELIMITER $$
+CREATE PROCEDURE consultarEstudiante(
+    IN carne BIGINT
+)
+procConsultarEstudiante:BEGIN
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCarnet(carne) = FALSE THEN
+        CALL errMessage('El carnet debe tener 9 dígitos');
+        LEAVE procConsultarEstudiante;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCarnet(carne) = FALSE THEN
+        CALL errMessage('No existe un estudiante asociado al carnet ingresado');
+        LEAVE procConsultarEstudiante;
+    END IF;
+
+    SELECT
+        e.carnet AS 'Carnet',
+        CONCAT(e.nombre, ' ', e.apellido) AS 'Nombre completo',
+        DATE_FORMAT(e.fecha_nac, '%d-%m-%Y') AS 'Fecha de nacimiento',
+        e.correo AS 'Correo',
+        e.telefono AS 'Teléfono',
+        e.direccion AS 'Dirección',
+        e.dpi AS 'DPI',
+        c.nombre AS 'Carrera',
+        e.creditos AS 'Créditos'
+    FROM ESTUDIANTE e INNER JOIN CARRERA c ON c.id_carrera = e.id_carrera WHERE carnet = carne;
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ consultarDocente ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarDocente;
+DELIMITER $$
+CREATE PROCEDURE consultarDocente(
+    IN siff BIGINT
+)
+procConsultarDocente:BEGIN
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarSIFF(siff) = FALSE THEN
+        CALL errMessage('El SIFF debe ser de tipo numérico y no puede estar vacío');
+        LEAVE procConsultarDocente;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarSIFF(siff) = FALSE THEN
+        CALL errMessage('No existe un docente asociado al SIFF ingresado');
+        LEAVE procConsultarDocente;
+    END IF;
+
+    SELECT
+        siff_docente AS 'Registro SIFF',
+        CONCAT(nombre, ' ', apellido) AS 'Nombre completo',
+        DATE_FORMAT(fecha_nac, '%d-%m-%Y') AS 'Fecha de nacimiento',
+        correo AS 'Correo',
+        telefono AS 'Teléfono',
+        direccion AS 'Dirección',
+        dpi AS 'DPI'
+    FROM DOCENTE WHERE siff_docente = siff;
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ consultarAsignados -----------------------------------------------
+DROP PROCEDURE IF EXISTS consultarAsignados;
+DELIMITER $$
+CREATE PROCEDURE consultarAsignados(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN anio INT,
+    IN seccion CHAR(1)
+)
+procConsultarAsignados:BEGIN
+
+    DECLARE idCicloAnio INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procConsultarAsignados;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procConsultarAsignados;
+    ELSEIF validarAnio(anio) = FALSE THEN
+        CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
+        LEAVE procConsultarAsignados;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procConsultarAsignados;
+    ELSEIF verificarCicloAnio(ciclo, anio) = FALSE THEN
+        CALL errMessage('No existen registros asociados al ciclo y año ingresados');
+        LEAVE procConsultarAsignados;
+    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
+        LEAVE procConsultarAsignados;
+    ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procConsultarAsignados;
+    END IF;
+
+    SET idCicloAnio = (SELECT getCicloAnioPersonalizado(ciclo, anio));
+
+    SELECT
+        e.carnet AS 'Carnet',
+        CONCAT(e.nombre, ' ', e.apellido) AS 'Nombre completo',
+        e.creditos AS 'Créditos'
+    FROM CURSO_HABILITADO ch
+    INNER JOIN ASIGNACION_CURSO ac ON ch.id_curso_habilitado = ac.id_curso_habilitado
+    INNER JOIN ESTUDIANTE e ON e.carnet = ac.carnet
+    WHERE ch.id_ciclo_anio = idCicloAnio AND ch.codigo_curso = codigoCurso AND ch.seccion = seccion AND ac.estado = 1;
+
+END;
+$$
+DELIMITER ;
+
+call consultarAsignados(0281, '1S', 2023, 'A');
