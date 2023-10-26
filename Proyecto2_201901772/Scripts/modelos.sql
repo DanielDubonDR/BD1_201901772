@@ -137,11 +137,23 @@ CREATE TABLE NOTA (
 DROP TABLE IF EXISTS ACTA;
 CREATE TABLE ACTA (
     id_acta INT NOT NULL AUTO_INCREMENT,
-    fecha_hora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
     id_curso_habilitado INT NOT NULL,
     PRIMARY KEY (id_acta),
     FOREIGN KEY (id_curso_habilitado) REFERENCES CURSO_HABILITADO(id_curso_habilitado)
 );
+
+# ------------------------------------------------------ ASIGNADOS_CURSO_HABILITADO ----------------------------------
+DROP TABLE IF EXISTS ASIGNADOS_CURSO_HABILITADO;
+CREATE TABLE ASIGNADOS_CURSO_HABILITADO (
+    id_asignados INT NOT NULL AUTO_INCREMENT,
+    cantidad INT NOT NULL DEFAULT 0,
+    id_curso_habilitado INT NOT NULL,
+    PRIMARY KEY (id_asignados),
+    FOREIGN KEY (id_curso_habilitado) REFERENCES CURSO_HABILITADO(id_curso_habilitado)
+);
+
 
 # ------------------------------------------------------ CARGAR_CICLOS -----------------------------------------------
 INSERT INTO CICLO (ciclo) VALUES ('1S');

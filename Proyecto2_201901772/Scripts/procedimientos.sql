@@ -294,6 +294,8 @@ procHabilitarCurso:BEGIN
     INSERT INTO CURSO_HABILITADO (id_ciclo_anio, cupo_maximo, seccion, siff_docente, codigo_curso)
     VALUES (idCicloCurso, cupo_maximo, seccion, siff_docente, codigo_curso);
 
+    INSERT INTO ASIGNADOS_CURSO_HABILITADO (id_curso_habilitado) VALUES (LAST_INSERT_ID());
+
     CALL message(CONCAT('Curso ', codigo_curso, ' sección ', seccion, ' habilitado exitosamente'));
 
 END;
@@ -378,14 +380,17 @@ procAsignarCurso:BEGIN
     IF verificarCurso(codigoCurso) = FALSE THEN
         CALL errMessage('No existe un curso asociado al código ingresado');
         LEAVE procAsignarCurso;
+    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
+        LEAVE procAsignarCurso;
     ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
-        CALL errMessage('No existe un curso habilitado asociado al ciclo y sección ingresados');
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
         LEAVE procAsignarCurso;
     ELSEIF verificarCarnet(carnetEstudiante) = FALSE THEN
         CALL errMessage('No existe un estudiante asociado al carnet ingresado');
         LEAVE procAsignarCurso;
     ELSEIF verificarCursoAsignadoMismaSeccion(carnetEstudiante, codigoCurso, ciclo, seccion) = TRUE THEN
-        CALL errMessage('El estudiante ya esta asignado al curso con la misma sección');
+        CALL errMessage('El estudiante ya esta asignado al curso en la misma sección');
         LEAVE procAsignarCurso;
     ELSEIF verificarCursoAsignadoDiferenteSeccion(carnetEstudiante, codigoCurso, ciclo) = TRUE THEN
         CALL errMessage('El estudiante ya esta asignado al curso en una sección diferente');
@@ -402,6 +407,9 @@ procAsignarCurso:BEGIN
     ELSEIF verificarCupoCurso(codigoCurso, ciclo, seccion) = FALSE THEN
         CALL errMessage('No se puede asignar el curso porque el cupo máximo ya fue alcanzado');
         LEAVE procAsignarCurso;
+    ELSEIF verificarCursoAprobado(carnetEstudiante, codigoCurso) = TRUE THEN
+        CALL errMessage('No se puede asignar el curso porque el estudiante ya lo aprobó');
+        LEAVE procAsignarCurso;
     END IF;
 
     SET idCursoHabilitado = (SELECT getIdCursoHabilitado(codigoCurso, ciclo, seccion));
@@ -411,10 +419,185 @@ procAsignarCurso:BEGIN
         LEAVE procAsignarCurso;
     END IF;
 
+    IF verificarAsociacionHorarios(idCursoHabilitado) = FALSE THEN
+        CALL errMessage('No se puedo asignar, debido a que no se han agregado horarios al curso habilitado');
+        LEAVE procAsignarCurso;
+    END IF;
+
     INSERT INTO ASIGNACION_CURSO (id_curso_habilitado, carnet)
     VALUES (idCursoHabilitado, carnetEstudiante);
 
-    CALL message(CONCAT('Curso ', codigoCurso, ' sección ', seccion, ' asignado al estudiante ', carnetEstudiante ,' exitosamente'));
+    CALL incrementarCantidadAsignadosCurso(idCursoHabilitado, 1);
+
+    CALL message(CONCAT('Se ha asignado el estudiante ', carnetEstudiante, ' al curso ', codigoCurso, ' sección ', seccion, ' exitosamente'));
+END;
+$$
+DELIMITER ;
+
+# -------------------------------------------- incrementarCantidadAsignadosCurso --------------------------------------
+DROP PROCEDURE IF EXISTS incrementarCantidadAsignadosCurso;
+DELIMITER $$
+CREATE PROCEDURE incrementarCantidadAsignadosCurso(
+    IN idCursoHabilitado INT,
+    IN decr INT
+)
+procIncrementarCantidadAsignadosCurso:BEGIN
+
+    UPDATE ASIGNADOS_CURSO_HABILITADO SET cantidad = cantidad + decr WHERE id_curso_habilitado = idCursoHabilitado;
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ desasignarCurso ------------------------------------------
+DROP PROCEDURE IF EXISTS desasignarCurso;
+DELIMITER $$
+CREATE PROCEDURE desasignarCurso(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN seccion CHAR(1),
+    IN carnetEstudiante BIGINT
+)
+procDesasignarCurso:BEGIN
+
+    DECLARE idCursoHabilitado INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procDesasignarCurso;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procDesasignarCurso;
+    ELSEIF validarCarnet(carnetEstudiante) = FALSE THEN
+        CALL errMessage('El carnet debe tener 9 dígitos');
+        LEAVE procDesasignarCurso;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCarnet(carnetEstudiante) = FALSE THEN
+        CALL errMessage('No existe un estudiante asociado al carnet ingresado');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCursoDesasignado(carnetEstudiante, codigoCurso, ciclo) = TRUE THEN
+        CALL errMessage('No se puede desasignar el curso porque el estudiante ya se lo desasignó para este ciclo');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCursoAsignadoDiferenteSeccion(carnetEstudiante, codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('El estudiante no se encuentra asignado al curso');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCursoAsignadoMismaSeccion(carnetEstudiante, codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('El estudiante no se encuentra asignado al curso en la sección ingresada');
+        LEAVE procDesasignarCurso;
+    ELSEIF verificarCursoAprobado(carnetEstudiante, codigoCurso) = TRUE THEN
+        CALL errMessage('No se puede desasignar el curso porque el estudiante ya lo aprobó');
+        LEAVE procDesasignarCurso;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT getIdCursoHabilitado(codigoCurso, ciclo, seccion));
+
+    IF idCursoHabilitado IS NULL OR idCursoHabilitado = -1 THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo y sección ingresados');
+        LEAVE procDesasignarCurso;
+    END IF;
+
+    UPDATE ASIGNACION_CURSO SET estado = 0 WHERE id_curso_habilitado = idCursoHabilitado AND carnet = carnetEstudiante;
+
+    CALL incrementarCantidadAsignadosCurso(idCursoHabilitado, -1);
+
+    CALL message(CONCAT('Se ha desasignado el estudiante ', carnetEstudiante, ' del curso ', codigoCurso, ' sección ', seccion, ' exitosamente'));
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ ingresarNota ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS ingresarNota;
+DELIMITER $$
+CREATE PROCEDURE ingresarNota(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN seccion CHAR(1),
+    IN carnetEstudiante BIGINT,
+    IN nota INT
+)
+procIngresarNota:BEGIN
+
+    DECLARE idCursoHabilitado INT;
+    DECLARE idAsignacion INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procIngresarNota;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procIngresarNota;
+    ELSEIF validarCarnet(carnetEstudiante) = FALSE THEN
+        CALL errMessage('El carnet debe tener 9 dígitos');
+        LEAVE procIngresarNota;
+    ELSEIF validarNota(nota) = FALSE THEN
+        CALL errMessage('La nota debe ser un número entero entre 0 y 100');
+        LEAVE procIngresarNota;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procIngresarNota;
+    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
+        LEAVE procIngresarNota;
+    ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procIngresarNota;
+    ELSEIF verificarCarnet(carnetEstudiante) = FALSE THEN
+        CALL errMessage('No existe un estudiante asociado al carnet ingresado');
+        LEAVE procIngresarNota;
+    ELSEIF verificarCursoAsignadoDiferenteSeccion(carnetEstudiante, codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('El estudiante no se encuentra asignado al curso');
+        LEAVE procIngresarNota;
+    ELSEIF verificarCursoAsignadoMismaSeccion(carnetEstudiante, codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('El estudiante no se encuentra asignado al curso en la sección ingresada');
+        LEAVE procIngresarNota;
+    ELSEIF verificarCursoDesasignado(carnetEstudiante, codigoCurso, ciclo) = TRUE THEN
+        CALL errMessage('No se puede ingresar la nota porque el estudiante ya se lo desasignó el curso para este ciclo');
+        LEAVE procIngresarNota;
+    ELSEIF verificarNotaIngresada(carnetEstudiante, codigoCurso, ciclo, seccion) = TRUE THEN
+        CALL errMessage('El estudiante ya tiene una nota ingresada para el curso en el ciclo ingresado');
+        LEAVE procIngresarNota;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT getIdCursoHabilitado(codigoCurso, ciclo, seccion));
+
+    IF idCursoHabilitado IS NULL OR idCursoHabilitado = -1 THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo y sección ingresados');
+        LEAVE procIngresarNota;
+    END IF;
+
+    SET idAsignacion = (SELECT id_asignacion FROM ASIGNACION_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND carnet = carnetEstudiante);
+
+    IF idAsignacion IS NULL OR idAsignacion = -1 THEN
+        CALL errMessage('No existe una asignación asociada al curso habilitado y estudiante ingresados');
+        LEAVE procIngresarNota;
+    END IF;
+
+    IF nota >= 61 THEN
+        SELECT creditos_acredita INTO @creditos FROM CURSO WHERE codigo_curso = codigoCurso;
+        UPDATE ESTUDIANTE SET creditos = creditos + @creditos WHERE carnet = carnetEstudiante;
+        INSERT INTO NOTA (nota, id_asignacion) VALUES (nota, idAsignacion);
+    ELSE
+        INSERT INTO NOTA (nota, id_asignacion) VALUES (nota, idAsignacion);
+    END IF;
+
+    CALL message(CONCAT('Se ha ingresado la nota ', nota, ' al estudiante ', carnetEstudiante, ' del curso ', codigoCurso, ' sección ', seccion, ' exitosamente'));
+
 END;
 $$
 DELIMITER ;
