@@ -53,7 +53,7 @@
 <dataTypeSize>1</dataTypeSize>
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="fecha_hora" id="B9CF1F7F-BDD6-41AF-9CBB-6B20B41CA582">
+<Attribute name="fecha" id="B9CF1F7F-BDD6-41AF-9CBB-6B20B41CA582">
 <createdBy>danie</createdBy>
 <createdTime>2023-10-18 11:29:47 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
@@ -62,7 +62,19 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT015</logicalDatatype>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hora" id="9A664EF9-4334-8DB3-AC63-7357643E8054">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-25 01:22:44 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<engineerTo>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="id_curso_habilitado" id="C916FF0F-09E5-106D-E539-CABA17642DDA">

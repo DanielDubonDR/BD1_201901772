@@ -43,14 +43,24 @@
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="fecha_hora" id="B2D11521-570F-6232-C633-DD96F79F6CE6">
+<Column name="fecha" id="B2D11521-570F-6232-C633-DD96F79F6CE6">
 <createdBy>danie</createdBy>
 <createdTime>2023-10-24 03:25:33 UTC</createdTime>
 <generatorID>B9CF1F7F-BDD6-41AF-9CBB-6B20B41CA582</generatorID>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT015</logicalDatatype>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hora" id="55D92413-DCAA-679A-5BDA-EA5796C7AF30">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-25 01:24:47 UTC</createdTime>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
