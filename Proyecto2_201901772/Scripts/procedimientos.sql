@@ -796,12 +796,9 @@ procConsultarAsignados:BEGIN
         CALL errMessage('No existe un curso asociado al código ingresado');
         LEAVE procConsultarAsignados;
     ELSEIF verificarCicloAnio(ciclo, anio) = FALSE THEN
-        CALL errMessage('No existen registros asociados al ciclo y año ingresados');
+        CALL errMessage('No existen registros asociados al ciclo y año ingresado');
         LEAVE procConsultarAsignados;
-    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
-        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
-        LEAVE procConsultarAsignados;
-    ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
+    ELSEIF verificarSeccionAnioPersonalizado(codigoCurso, ciclo, seccion, anio) = FALSE THEN
         CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
         LEAVE procConsultarAsignados;
     END IF;
@@ -821,4 +818,103 @@ END;
 $$
 DELIMITER ;
 
-call consultarAsignados(0281, '1S', 2023, 'A');
+# ------------------------------------------ consultarAprovacion ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarAprovacion;
+DELIMITER $$
+CREATE PROCEDURE consultarAprovacion(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN anio INT,
+    IN seccion CHAR(1)
+)
+procConsultarAprovacion:BEGIN
+
+    DECLARE idCicloAnio INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procConsultarAprovacion;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procConsultarAprovacion;
+    ELSEIF validarAnio(anio) = FALSE THEN
+        CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
+        LEAVE procConsultarAprovacion;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procConsultarAprovacion;
+    ELSEIF verificarCicloAnio(ciclo, anio) = FALSE THEN
+        CALL errMessage('No existen registros asociados al ciclo y año ingresado');
+        LEAVE procConsultarAprovacion;
+    ELSEIF verificarSeccionAnioPersonalizado(codigoCurso, ciclo, seccion, anio) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procConsultarAprovacion;
+    ELSEIF verificarNotasExisten(codigoCurso, ciclo, seccion, anio) = FALSE THEN
+        CALL errMessage('No se puede consultar la aprovación porque no se han ingresado todas las notas correpondientes a los estudiantes asignados al curso');
+        LEAVE procConsultarAprovacion;
+    END IF;
+
+    SELECT
+        ch.codigo_curso AS 'Código de curso',
+        e.carnet AS 'Carnet',
+        CONCAT(e.nombre, ' ', e.apellido) AS 'Nombre completo',
+        IF(n.nota >= 61, 'APROBADO', 'DESAPROBADO') AS 'Estado'
+    FROM CICLO c
+    INNER JOIN CICLO_ANIO ca ON c.id_ciclo = ca.id_ciclo
+    INNER JOIN CURSO_HABILITADO ch ON ca.id_ciclo_anio = ch.id_ciclo_anio
+    INNER JOIN ASIGNACION_CURSO ac ON ch.id_curso_habilitado = ac.id_curso_habilitado
+    INNER JOIN ESTUDIANTE e ON e.carnet = ac.carnet
+    INNER JOIN NOTA n ON n.id_asignacion = ac.id_asignacion
+    WHERE c.ciclo = ciclo AND ca.anio = anio AND ch.codigo_curso = codigoCurso AND ch.seccion = seccion;
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ consultarActas ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarActas;
+DELIMITER $$
+CREATE PROCEDURE consultarActas(
+    IN codigoCurso BIGINT
+)
+procConsultarActas:BEGIN
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarNumero(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo');
+        LEAVE procConsultarActas;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procConsultarActas;
+    ELSEIF verificarActasExisten(codigoCurso) = FALSE THEN
+        CALL errMessage('No existen actas asociadas al curso ingresado');
+        LEAVE procConsultarActas;
+    END IF;
+
+    SELECT
+        ch.codigo_curso AS 'Código del curso',
+        ch.seccion AS 'Sección',
+        IF(c.ciclo='1S', 'PRIMER SEMESTRE', IF(c.ciclo='2S', 'SEGUNDO SEMESTRE', IF(c.ciclo='VJ', 'VACACIONES JUNIO', 'VACACIONES DICIEMBRE'))) AS 'Ciclo',
+        ca.anio AS 'Año',
+        ach.cantidad AS 'Cantidad de estudiantes',
+        DATE_FORMAT(a.fecha, '%d-%m-%Y') AS 'Fecha',
+        a.hora AS 'Hora'
+    FROM CURSO_HABILITADO ch
+    INNER JOIN ACTA a ON ch.id_curso_habilitado = a.id_curso_habilitado
+    INNER JOIN ASIGNADOS_CURSO_HABILITADO ach ON ch.id_curso_habilitado = ach.id_curso_habilitado
+    INNER JOIN CICLO_ANIO ca ON ch.id_ciclo_anio = ca.id_ciclo_anio
+    INNER JOIN CICLO c ON ca.id_ciclo = c.id_ciclo
+    WHERE ch.codigo_curso = codigoCurso
+    ORDER BY a.fecha, a.hora DESC ;
+END;
+$$
+DELIMITER ;
+
+call consultarActas(0281);

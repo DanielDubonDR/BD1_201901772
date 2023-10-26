@@ -1077,4 +1077,78 @@ END;
 $$
 DELIMITER ;
 
-select getCicloAnioPersonalizado('1S',2021);
+# ------------------------------------------------- verificarSeccionAnioPersonalizado -------------------------------------------------
+DROP FUNCTION IF EXISTS verificarSeccionAnioPersonalizado;
+DELIMITER $$
+CREATE FUNCTION verificarSeccionAnioPersonalizado(codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1), anio INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idHabilitado INT;
+
+    SELECT id_curso_habilitado INTO idHabilitado
+    FROM CURSO_HABILITADO
+    WHERE id_ciclo_anio = getCicloAnioPersonalizado(ciclo, anio)
+    AND codigo_curso = codigoCurso
+    AND seccion = secc;
+
+    IF idHabilitado IS NULL THEN
+        RETURN FALSE;
+    ELSE
+        RETURN TRUE;
+    END IF;
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------------- verificarNotasExisten ---------------------------------------------
+DROP FUNCTION IF EXISTS verificarNotasExisten;
+DELIMITER $$
+CREATE FUNCTION verificarNotasExisten(codigoCurso BIGINT, ciclo VARCHAR(2), seccion CHAR(1), anio INT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+
+    SELECT
+        COUNT(*) INTO @total
+    FROM CICLO c
+    INNER JOIN CICLO_ANIO ca ON c.id_ciclo = ca.id_ciclo
+    INNER JOIN CURSO_HABILITADO ch ON ca.id_ciclo_anio = ch.id_ciclo_anio
+    INNER JOIN ASIGNACION_CURSO ac ON ch.id_curso_habilitado = ac.id_curso_habilitado
+    INNER JOIN ESTUDIANTE e ON e.carnet = ac.carnet
+    INNER JOIN NOTA n ON n.id_asignacion = ac.id_asignacion
+    WHERE c.ciclo = ciclo AND ca.anio = anio AND ch.codigo_curso = codigoCurso AND ch.seccion = seccion;
+
+    IF @total > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------------- verificarActasExisten ---------------------------------------------
+DROP FUNCTION IF EXISTS verificarActasExisten;
+DELIMITER $$
+CREATE FUNCTION verificarActasExisten(codigoCurso BIGINT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+
+    SELECT
+        COUNT(*) INTO @total
+    FROM ACTA
+    INNER JOIN CURSO_HABILITADO ch ON ACTA.id_curso_habilitado = ch.id_curso_habilitado
+    WHERE ch.codigo_curso = codigoCurso;
+
+    IF @total > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+
+END;
+$$
+DELIMITER ;
+
+select verificarActasExisten(282);
