@@ -499,6 +499,9 @@ procDesasignarCurso:BEGIN
     ELSEIF verificarCursoAprobado(carnetEstudiante, codigoCurso) = TRUE THEN
         CALL errMessage('No se puede desasignar el curso porque el estudiante ya lo aprobó');
         LEAVE procDesasignarCurso;
+    ELSEIF verificarEstudianteConNota(carnetEstudiante, codigoCurso, ciclo, seccion) = TRUE THEN
+        CALL errMessage('No se puede desasignar el curso porque el estudiante ya tiene una nota ingresada');
+        LEAVE procDesasignarCurso;
     END IF;
 
     SET idCursoHabilitado = (SELECT getIdCursoHabilitado(codigoCurso, ciclo, seccion));
@@ -597,6 +600,62 @@ procIngresarNota:BEGIN
     END IF;
 
     CALL message(CONCAT('Se ha ingresado la nota ', nota, ' al estudiante ', carnetEstudiante, ' del curso ', codigoCurso, ' sección ', seccion, ' exitosamente'));
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------ generarActa ------------------------------------------------------------
+DROP PROCEDURE IF EXISTS generarActa;
+DELIMITER $$
+CREATE PROCEDURE generarActa(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN seccion CHAR(1)
+)
+procGenerarActa:BEGIN
+
+    DECLARE idCursoHabilitado INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procGenerarActa;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procGenerarActa;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procGenerarActa;
+    ELSEIF verificarCiclo(codigoCurso, ciclo) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo ingresado');
+        LEAVE procGenerarActa;
+    ELSEIF verificarSeccion(codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procGenerarActa;
+    ELSEIF verificarNotasIngresadas(codigoCurso, ciclo, seccion) = FALSE THEN
+        CALL errMessage('No se puede generar el acta porque no se han ingresado todas las notas correpondientes a los estudiantes asignados al curso');
+        LEAVE procGenerarActa;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT getIdCursoHabilitado(codigoCurso, ciclo, seccion));
+
+    IF idCursoHabilitado IS NULL OR idCursoHabilitado = -1 THEN
+        CALL errMessage('No existe un curso habilitado asociado al ciclo y sección ingresados');
+        LEAVE procGenerarActa;
+    END IF;
+
+    IF EXISTS(SELECT * FROM ACTA WHERE id_curso_habilitado = idCursoHabilitado) THEN
+        CALL errMessage('Ya existe un acta asociada al curso habilitado con la sección y ciclo ingresados');
+        LEAVE procGenerarActa;
+    END IF;
+
+    INSERT INTO ACTA (id_curso_habilitado, fecha, hora) VALUES (idCursoHabilitado, CURDATE(), CURTIME());
+
+    CALL message(CONCAT('Se ha generado el acta del curso ', codigoCurso, ' sección ', seccion, ' exitosamente'));
 
 END;
 $$

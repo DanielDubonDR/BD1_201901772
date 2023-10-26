@@ -966,9 +966,63 @@ END;
 $$
 DELIMITER ;
 
-# select verificarCursoAprobado(201901772, 0281);
-#
-# SELECT * FROM NOTA n
-# INNER JOIN ASIGNACION_CURSO ac ON n.id_asignacion = ac.id_asignacion
-# INNER JOIN CURSO_HABILITADO ch ON ac.id_curso_habilitado = ch.id_curso_habilitado
-# WHERE ac.carnet = 201901772 AND ch.codigo_curso = 0281 AND n.nota >= 61;
+# ------------------------------------------------- verificarNotasIngresadas ------------------------------------------
+DROP FUNCTION IF EXISTS verificarNotasIngresadas;
+DELIMITER $$
+CREATE FUNCTION verificarNotasIngresadas(codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE idCicloAnio INT;
+    DECLARE idCursoHabilitado INT;
+    DECLARE estudiantesAsignados INT;
+    DECLARE estudiantesConNota INT;
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+    SET idCicloAnio = getIdCicloAnio(ciclo);
+
+    IF idCicloAnio = -1 THEN
+        RETURN resultado;
+    END IF;
+
+    SET idCursoHabilitado = (SELECT id_curso_habilitado FROM CURSO_HABILITADO WHERE id_ciclo_anio = idCicloAnio AND codigo_curso = codigoCurso AND seccion = secc);
+    SET estudiantesAsignados = (SELECT COUNT(*) FROM ASIGNACION_CURSO WHERE id_curso_habilitado = idCursoHabilitado AND estado = TRUE);
+    SET estudiantesConNota = (SELECT COUNT(*) FROM NOTA n INNER JOIN ASIGNACION_CURSO ac ON n.id_asignacion = ac.id_asignacion WHERE ac.id_curso_habilitado = idCursoHabilitado);
+
+    IF estudiantesAsignados = estudiantesConNota THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+
+END;
+$$
+DELIMITER ;
+
+# ------------------------------------------------- verificarEstudianteConNota ------------------------------------------
+DROP FUNCTION IF EXISTS verificarEstudianteConNota;
+DELIMITER $$
+CREATE FUNCTION verificarEstudianteConNota(carne BIGINT, codigoCurso BIGINT, ciclo VARCHAR(2), secc CHAR(1))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+
+    SET resultado = FALSE;
+
+    IF EXISTS(
+        SELECT * FROM NOTA n
+        INNER JOIN ASIGNACION_CURSO ac ON n.id_asignacion = ac.id_asignacion
+        INNER JOIN CURSO_HABILITADO ch ON ac.id_curso_habilitado = ch.id_curso_habilitado
+        WHERE ac.carnet = carne AND ch.codigo_curso = codigoCurso AND n.nota >= 0 AND ch.seccion = secc AND ch.id_ciclo_anio = getIdCicloAnio(ciclo)
+    ) THEN
+        SET resultado = TRUE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+
+select verificarEstudianteConNota(201901774, 0281, '1S', 'A');
+
+select verificarNotasIngresadas(0281, '1S', 'A');
