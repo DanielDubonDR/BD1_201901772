@@ -8,4 +8,4 @@ Nombre: Daniel Reginaldo Dubón Rodríguez
 ## Actividades
 
 - [`Proyecto 1`](./Proyecto1_201901772)
-- `Proyecto 2`
+- [`Proyecto 2`](./Proyecto2_201901772)
