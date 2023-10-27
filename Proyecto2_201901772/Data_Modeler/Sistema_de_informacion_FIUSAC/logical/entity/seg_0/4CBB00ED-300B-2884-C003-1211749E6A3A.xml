@@ -59,8 +59,9 @@
 <createdBy>danie</createdBy>
 <createdTime>2023-10-18 11:23:04 UTC</createdTime>
 <ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="true"/>
+<item key="0C7677F8-C529-6997-D440-94EAC444503B" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

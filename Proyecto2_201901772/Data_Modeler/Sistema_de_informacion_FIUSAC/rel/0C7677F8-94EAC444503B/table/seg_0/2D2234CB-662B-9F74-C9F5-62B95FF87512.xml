@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2D2234CB-662B-9F74-C9F5-62B95FF87512" name="ASIGNADOS_CURSO_HABILITADO">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>E4989389-DBB7-E013-39C0-BAA2F4DD238E</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_asignados" id="6AA341A8-39C7-9E98-010D-3FBC0CABD451">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>8F79CC0B-A737-4587-D7B3-196F566689EF</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<use>0</use>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="cantidad" id="D46D6B21-D93A-00C0-9EFE-272CFFE772D2">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>C32B58E2-A6F9-F404-48A3-2AC77B84FAF1</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CURSO_HABILITADO_id_curso_habilitado" id="BF5A1129-DC12-80B8-78BF-78BD870271A3">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>ACBBB756-58C3-8087-9808-E4D76467A585</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B039D7C9-85E2-2F26-BDE1-F33A7F286982" referredColumn="8BC6CB42-0331-6FF9-7480-00F12F6E95FA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F26560F4-F2CA-2BB6-70D8-0BFF7D879048" name="ASIGNADOS_CURSO_HABILITADO_PK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>E070AE31-FBA5-DA20-B14A-426C740657CD</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="6AA341A8-39C7-9E98-010D-3FBC0CABD451"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AB0BDD0B-8B92-3917-AA4B-5B49D9D47BE9" name="ASIGNADOS_CURSO_HABILITADO_CURSO_HABILITADO_FK">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>C0D234DA-7046-1FB2-B5CD-1BA1E4410F9C</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BF5A1129-DC12-80B8-78BF-78BD870271A3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -79,6 +79,17 @@
 <colAssociation fkAssociation="FB84C6C2-C649-AF9A-40B6-0A6D0E9CB481" referredColumn="8BC6CB42-0331-6FF9-7480-00F12F6E95FA"/>
 </associations>
 </Column>
+<Column name="hora1" id="2D1AA14E-AFA4-7DC9-2DFC-1CAE292E9384">
+<createdBy>danie</createdBy>
+<createdTime>2023-10-27 06:11:32 UTC</createdTime>
+<generatorID>9A664EF9-4334-8DB3-AC63-7357643E8054</generatorID>
+<ownerDesignName>Sistema_de_informacion_FIUSAC</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT014</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="C4AEC2F0-F821-6D09-21E5-5E72A32EE003" name="ACTA_PK">
