@@ -95,7 +95,7 @@ procRegistrarEstudiante:BEGIN
     ELSEIF validarTelefono(telefono) = FALSE THEN
         CALL errMessage('El telefono debe ser de tipo numérico de al menos 8 dígitos y no puede estar vacío');
         LEAVE procRegistrarEstudiante;
-    ELSEIF validarTexto(direccion) = FALSE THEN
+    ELSEIF validarDireccion(direccion) = FALSE THEN
         CALL errMessage('La direccion debe ser de tipo texto y no puede estar vacío');
         LEAVE procRegistrarEstudiante;
     ELSEIF validarDPI(dpi) = FALSE THEN
@@ -161,7 +161,7 @@ procRegistrarDocente:BEGIN
     ELSEIF validarTelefono(telefono) = FALSE THEN
         CALL errMessage('El telefono debe ser de tipo numérico de al menos 8 dígitos y no puede estar vacío');
         LEAVE procRegistrarDocente;
-    ELSEIF validarTexto(direccion) = FALSE THEN
+    ELSEIF validarDireccion(direccion) = FALSE THEN
         CALL errMessage('La dirección debe ser de tipo texto y no puede estar vacío');
         LEAVE procRegistrarDocente;
     ELSEIF validarDPI(dpi) = FALSE THEN
@@ -818,44 +818,44 @@ END;
 $$
 DELIMITER ;
 
-# ------------------------------------------ consultarAprovacion ------------------------------------------------------
-DROP PROCEDURE IF EXISTS consultarAprovacion;
+# ------------------------------------------ consultarAprobacion ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarAprobacion;
 DELIMITER $$
-CREATE PROCEDURE consultarAprovacion(
+CREATE PROCEDURE consultarAprobacion(
     IN codigoCurso BIGINT,
     IN ciclo VARCHAR(2),
     IN anio INT,
     IN seccion CHAR(1)
 )
-procConsultarAprovacion:BEGIN
+procConsultarAprobacion:BEGIN
 
     DECLARE idCicloAnio INT;
 
     # ------------------------------------- validacionesDeCampos -------------------------------------
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     ELSEIF validarAnio(anio) = FALSE THEN
         CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     END IF;
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
         CALL errMessage('No existe un curso asociado al código ingresado');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     ELSEIF verificarCicloAnio(ciclo, anio) = FALSE THEN
         CALL errMessage('No existen registros asociados al ciclo y año ingresado');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     ELSEIF verificarSeccionAnioPersonalizado(codigoCurso, ciclo, seccion, anio) = FALSE THEN
         CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     ELSEIF verificarNotasExisten(codigoCurso, ciclo, seccion, anio) = FALSE THEN
         CALL errMessage('No se puede consultar la aprovación porque no se han ingresado todas las notas correpondientes a los estudiantes asignados al curso');
-        LEAVE procConsultarAprovacion;
+        LEAVE procConsultarAprobacion;
     END IF;
 
     SELECT
@@ -917,4 +917,62 @@ END;
 $$
 DELIMITER ;
 
-call consultarActas(0281);
+# ------------------------------------------ consultarDesasignacion ------------------------------------------------------
+DROP PROCEDURE IF EXISTS consultarDesasignacion;
+DELIMITER $$
+CREATE PROCEDURE consultarDesasignacion(
+    IN codigoCurso BIGINT,
+    IN ciclo VARCHAR(2),
+    IN anio INT,
+    IN seccion CHAR(1)
+)
+procConsultarDesasignacion:BEGIN
+
+    DECLARE idCicloAnio INT;
+
+    # ------------------------------------- validacionesDeCampos -------------------------------------
+    IF validarCiclo(ciclo) = FALSE THEN
+        CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
+        LEAVE procConsultarDesasignacion;
+    ELSEIF validarSeccion(seccion) = FALSE THEN
+        CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
+        LEAVE procConsultarDesasignacion;
+    ELSEIF validarAnio(anio) = FALSE THEN
+        CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
+        LEAVE procConsultarDesasignacion;
+    END IF;
+
+    # ------------------------------------- validacionesDeRegistros -------------------------------------
+    IF verificarCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('No existe un curso asociado al código ingresado');
+        LEAVE procConsultarDesasignacion;
+    ELSEIF verificarCicloAnio(ciclo, anio) = FALSE THEN
+        CALL errMessage('No existen registros asociados al ciclo y año ingresado');
+        LEAVE procConsultarDesasignacion;
+    ELSEIF verificarSeccionAnioPersonalizado(codigoCurso, ciclo, seccion, anio) = FALSE THEN
+        CALL errMessage('No existe un curso habilitado asociado a la sección ingresada');
+        LEAVE procConsultarDesasignacion;
+    END IF;
+
+    SELECT
+    T.*,
+    ROUND((T.`Estudiantes Desasignados` / (T.`Estudiantes Asignados` + T.`Estudiantes Desasignados`)) * 100, 2) AS 'Porcentaje de Desasignación'
+FROM
+(
+    SELECT
+        codigo_curso AS 'Código del curso',
+        seccion AS 'Sección',
+        IF(ciclo='1S', 'PRIMER SEMESTRE', IF(ciclo='2S', 'SEGUNDO SEMESTRE', IF(ciclo='VJ', 'VACACIONES JUNIO', 'VACACIONES DICIEMBRE'))) AS 'Ciclo',
+        anio AS 'Año',
+        (SELECT COUNT(*) FROM ASIGNACION_CURSO ac WHERE ac.id_curso_habilitado = ch.id_curso_habilitado AND ac.estado = 1) AS 'Estudiantes Asignados',
+        (SELECT COUNT(*) FROM ASIGNACION_CURSO ac WHERE ac.id_curso_habilitado = ch.id_curso_habilitado AND ac.estado = 0) AS 'Estudiantes Desasignados'
+    FROM CURSO_HABILITADO ch
+    INNER JOIN CICLO_ANIO ca ON ch.id_ciclo_anio = ca.id_ciclo_anio
+    INNER JOIN CICLO c ON ca.id_ciclo = c.id_ciclo
+    WHERE ch.codigo_curso = codigoCurso AND ch.seccion = seccion AND ca.anio = anio
+) AS T;
+
+
+END;
+$$
+DELIMITER ;

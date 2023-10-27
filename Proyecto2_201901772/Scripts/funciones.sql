@@ -79,7 +79,6 @@ $$
 DELIMITER ;
 
 # -------------------------------------------- validarFecha --------------------------------------------
-# 1. La fecha debe tener el formato DD-MM-YYYY
 DROP FUNCTION IF EXISTS validarFecha;
 DELIMITER $$
 CREATE FUNCTION validarFecha(fecha VARCHAR(10))
@@ -87,7 +86,7 @@ RETURNS BOOLEAN DETERMINISTIC
 BEGIN
     DECLARE resultado BOOLEAN;
     SET resultado = FALSE;
-    IF fecha REGEXP '^[0-9]{2}-[0-9]{2}-[0-9]{4}$' THEN
+    IF fecha REGEXP '^[0-9]{2}-[0-9]{2}-[0-9]{4}$' OR fecha REGEXP '^[0-9]-[0-9]-[0-9]{4}$' THEN
         SET resultado = TRUE;
     ELSE
         SET resultado = FALSE;
@@ -156,13 +155,17 @@ RETURNS BOOLEAN DETERMINISTIC
 BEGIN
     DECLARE resultado BOOLEAN;
     SET resultado = FALSE;
-    IF dpi REGEXP '^[0-9]{13}$' THEN
+    IF dpi REGEXP '^[0-9]+$' THEN
         SET resultado = TRUE;
     ELSE
         SET resultado = FALSE;
     END IF;
 
     IF dpi IS NULL THEN
+        SET resultado = FALSE;
+    END IF;
+
+    IF dpi <= 0 THEN
         SET resultado = FALSE;
     END IF;
 
@@ -368,7 +371,7 @@ RETURNS BOOLEAN DETERMINISTIC
 BEGIN
     DECLARE resultado BOOLEAN;
     SET resultado = FALSE;
-    IF nombreCurso REGEXP '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$' THEN
+    IF nombreCurso REGEXP '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ. ]+$' THEN
         SET resultado = TRUE;
     ELSE
         SET resultado = FALSE;
@@ -1151,4 +1154,25 @@ END;
 $$
 DELIMITER ;
 
-select verificarActasExisten(282);
+# -------------------------------------------- validarDireccion --------------------------------------------
+DROP FUNCTION IF EXISTS validarDireccion;
+DELIMITER $$
+CREATE FUNCTION validarDireccion(direccion VARCHAR(150))
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF direccion REGEXP '^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ., -]+$' THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
+    END IF;
+
+    IF direccion IS NULL OR direccion = '' THEN
+        SET resultado = FALSE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
