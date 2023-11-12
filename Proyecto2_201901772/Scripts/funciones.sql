@@ -481,7 +481,33 @@ BEGIN
     OR BINARY seccion= 'W'
     OR BINARY seccion= 'X'
     OR BINARY seccion= 'Y'
-    OR BINARY seccion= 'Z', TRUE, FALSE);
+    OR BINARY seccion= 'Z'
+    OR BINARY seccion= 'a'
+    OR BINARY seccion= 'b'
+    OR BINARY seccion= 'c'
+    OR BINARY seccion= 'd'
+    OR BINARY seccion= 'e'
+    OR BINARY seccion= 'f'
+    OR BINARY seccion= 'g'
+    OR BINARY seccion= 'h'
+    OR BINARY seccion= 'i'
+    OR BINARY seccion= 'j'
+    OR BINARY seccion= 'k'
+    OR BINARY seccion= 'l'
+    OR BINARY seccion= 'm'
+    OR BINARY seccion= 'n'
+    OR BINARY seccion= 'o'
+    OR BINARY seccion= 'p'
+    OR BINARY seccion= 'q'
+    OR BINARY seccion= 'r'
+    OR BINARY seccion= 's'
+    OR BINARY seccion= 't'
+    OR BINARY seccion= 'u'
+    OR BINARY seccion= 'v'
+    OR BINARY seccion= 'w'
+    OR BINARY seccion= 'x'
+    OR BINARY seccion= 'y'
+    OR BINARY seccion= 'z', TRUE, FALSE);
 END;
 $$
 DELIMITER ;
@@ -1176,3 +1202,27 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
+# -------------------------------------------- validarCodigoCurso --------------------------------------------
+DROP FUNCTION IF EXISTS validarCodigoCurso;
+DELIMITER $$
+CREATE FUNCTION validarCodigoCurso(codigoCurso BIGINT)
+RETURNS BOOLEAN DETERMINISTIC
+BEGIN
+    DECLARE resultado BOOLEAN;
+    SET resultado = FALSE;
+    IF codigoCurso REGEXP '^[0-9]+$' THEN
+        SET resultado = TRUE;
+    ELSE
+        SET resultado = FALSE;
+    END IF;
+
+    IF codigoCurso IS NULL OR codigoCurso = '' OR codigoCurso <= 0 THEN
+        SET resultado = FALSE;
+    END IF;
+
+    RETURN resultado;
+END;
+$$
+DELIMITER ;
+

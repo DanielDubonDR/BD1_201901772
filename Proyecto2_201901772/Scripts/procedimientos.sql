@@ -209,6 +209,9 @@ procCrearCurso:BEGIN
     IF validarNombreCurso(nombre) = FALSE THEN
         CALL errMessage('El nombre debe ser de tipo texto y no puede estar vacío');
         LEAVE procCrearCurso;
+    ELSEIF validarCodigoCurso(codigo_curso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procCrearCurso;
     ELSEIF validarNumeroCon0(creditos_necesarios) = FALSE THEN
         CALL errMessage('Los créditos necesarios puede ser 0 o un entero positivo');
         LEAVE procCrearCurso;
@@ -262,6 +265,9 @@ procHabilitarCurso:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procHabilitarCurso;
+    ELSEIF validarCodigoCurso(codigo_curso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procHabilitarCurso;
     ELSEIF validarSIFF(siff_docente) = FALSE THEN
         CALL errMessage('El siff_docente debe ser de tipo numérico y no puede estar vacío');
         LEAVE procHabilitarCurso;
@@ -272,6 +278,8 @@ procHabilitarCurso:BEGIN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procHabilitarCurso;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigo_curso) = FALSE THEN
@@ -368,6 +376,9 @@ procAsignarCurso:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procAsignarCurso;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procAsignarCurso;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procAsignarCurso;
@@ -375,6 +386,8 @@ procAsignarCurso:BEGIN
         CALL errMessage('El carnet debe tener 9 dígitos');
         LEAVE procAsignarCurso;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -466,6 +479,9 @@ procDesasignarCurso:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procDesasignarCurso;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procDesasignarCurso;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procDesasignarCurso;
@@ -473,6 +489,8 @@ procDesasignarCurso:BEGIN
         CALL errMessage('El carnet debe tener 9 dígitos');
         LEAVE procDesasignarCurso;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -539,6 +557,9 @@ procIngresarNota:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procIngresarNota;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procIngresarNota;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procIngresarNota;
@@ -549,6 +570,8 @@ procIngresarNota:BEGIN
         CALL errMessage('La nota debe ser un número entero entre 0 y 100');
         LEAVE procIngresarNota;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -621,10 +644,15 @@ procGenerarActa:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procGenerarActa;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procGenerarActa;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procGenerarActa;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -783,6 +811,9 @@ procConsultarAsignados:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procConsultarAsignados;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procConsultarAsignados;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procConsultarAsignados;
@@ -790,6 +821,8 @@ procConsultarAsignados:BEGIN
         CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
         LEAVE procConsultarAsignados;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -835,6 +868,9 @@ procConsultarAprobacion:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procConsultarAprobacion;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procConsultarAprobacion;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procConsultarAprobacion;
@@ -842,6 +878,8 @@ procConsultarAprobacion:BEGIN
         CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
         LEAVE procConsultarAprobacion;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
@@ -934,6 +972,9 @@ procConsultarDesasignacion:BEGIN
     IF validarCiclo(ciclo) = FALSE THEN
         CALL errMessage('El ciclo solo acepta valores 1S, 2S, VJ, VD, el campoo no puede estar vacío');
         LEAVE procConsultarDesasignacion;
+    ELSEIF validarCodigoCurso(codigoCurso) = FALSE THEN
+        CALL errMessage('El código del curso debe ser un número entero positivo y no puede estar vacío');
+        LEAVE procConsultarDesasignacion;
     ELSEIF validarSeccion(seccion) = FALSE THEN
         CALL errMessage('La sección solo acepta un caracter entre A-Z, el campo no puede estar vacío');
         LEAVE procConsultarDesasignacion;
@@ -941,6 +982,8 @@ procConsultarDesasignacion:BEGIN
         CALL errMessage('El año debe ser un número entero positivo de 4 dígitos');
         LEAVE procConsultarDesasignacion;
     END IF;
+
+    SET seccion = UPPER(seccion);
 
     # ------------------------------------- validacionesDeRegistros -------------------------------------
     IF verificarCurso(codigoCurso) = FALSE THEN
